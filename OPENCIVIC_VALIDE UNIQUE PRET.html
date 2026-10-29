@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPENCIVIC — Espace Vie Citoyenne | Commune des Lacs 1</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body { background: #f5f7fa; color: #2c3e50; line-height: 1.6; }
+  .top-bar { background: #0f766e; color: white; padding: 8px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+  .top-bar a { color: white; text-decoration: none; }
+  header { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+  .header-content { max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo svg { width: 50px; height: 50px; }
+  .logo-text h1 { font-size: 20px; color: #0f766e; font-weight: bold; }
+  .logo-text p { font-size: 11px; color: #666; }
+  nav ul { display: flex; list-style: none; gap: 5px; flex-wrap: wrap; }
+  nav a { padding: 8px 12px; color: #2c3e50; text-decoration: none; border-radius: 6px; font-size: 13px; transition: 0.2s; }
+  nav a:hover { background: #e0f2f1; color: #0f766e; }
+  nav a.admin { background: #dc3545; color: white; }
+  nav a.whatsapp { background: #25D366; color: white; }
+  
+  .hero { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); color: white; padding: 70px 20px; text-align: center; }
+  .hero h2 { font-size: 38px; margin-bottom: 15px; }
+  .hero p { font-size: 17px; max-width: 700px; margin: 0 auto 25px; opacity: 0.95; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn { padding: 11px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: 0.2s; display: inline-block; border: none; cursor: pointer; font-size: 14px; }
+  .btn-primary { background: white; color: #0f766e; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+  .btn-secondary { background: transparent; color: white; border: 2px solid white; }
+  .btn-secondary:hover { background: white; color: #0f766e; }
+  .btn-whatsapp { background: #25D366; color: white; }
+  .btn-whatsapp:hover { background: #1da851; }
+  .btn-vote { background: #0f766e; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
+  .btn-vote:hover { background: #0d5f59; }
+  .btn-vote.voted { background: #28a745; }
+  .btn-vote:disabled { background: #ccc; cursor: not-allowed; }
+  
+  .stats { max-width: 1200px; margin: -35px auto 30px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; position: relative; z-index: 10; }
+  .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; }
+  .stat-number { font-size: 32px; font-weight: bold; color: #0f766e; }
+  .stat-label { color: #666; font-size: 13px; margin-top: 5px; }
+  
+  section { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+  .section-title { text-align: center; margin-bottom: 35px; }
+  .section-title h2 { font-size: 28px; color: #0f766e; margin-bottom: 8px; }
+  .section-title p { color: #666; font-size: 15px; }
+  
+  .parcours { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .parcours-step { background: white; padding: 25px 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); position: relative; }
+  .step-number { position: absolute; top: -15px; left: 20px; width: 32px; height: 32px; background: #0f766e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+  .parcours-step h3 { color: #0f766e; margin: 10px 0; font-size: 16px; }
+  .parcours-step p { color: #555; font-size: 13px; }
+  
+  .bdc-section, .form-section, .whatsapp-info, .transparence-card, .info-item, .initiative-stat, .budget-stat { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .bdc-section { padding: 35px; }
+  .bdc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; margin-top: 25px; }
+  .bdc-engagements ul { list-style: none; }
+  .bdc-engagements li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+  .bdc-engagements li:before { content: "✓"; color: #28a745; font-weight: bold; margin-right: 10px; }
+  .bdc-contact { background: #f8f9fa; padding: 25px; border-radius: 10px; }
+  .bdc-contact h3 { color: #0f766e; margin-bottom: 15px; font-size: 18px; }
+  .bdc-contact p { margin: 8px 0; font-size: 14px; }
+  
+  .form-section { padding: 35px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group { margin-bottom: 15px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #2c3e50; }
+  input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #0f766e; box-shadow: 0 0 0 3px rgba(15,118,110,0.1); }
+  textarea { resize: vertical; min-height: 90px; }
+  .checkbox-group { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+  .checkbox-group input { width: auto; }
+  .form-info { background: #e0f2f1; padding: 12px; border-radius: 8px; font-size: 12px; color: #0f766e; margin-top: 15px; }
+  .submit-btn { background: #0f766e; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; }
+  .submit-btn:hover { background: #0d5f59; }
+  
+  .initiative-banner { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 35px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
+  .initiative-banner h3 { font-size: 22px; margin-bottom: 8px; }
+  .initiative-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 25px; }
+  .initiative-stat { padding: 18px; text-align: center; }
+  .initiative-stat .num { font-size: 24px; font-weight: bold; color: #28a745; }
+  .initiative-stat .lbl { font-size: 12px; color: #666; }
+  .initiative-form-section { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 12px; margin-top: 25px; }
+  .initiative-form-section h3 { color: #28a745; margin-bottom: 15px; }
+  
+  .budget-header { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 25px; }
+  .budget-stat { padding: 18px; text-align: center; }
+  .budget-stat .num { font-size: 26px; font-weight: bold; color: #0f766e; }
+  .budget-stat .lbl { font-size: 12px; color: #666; }
+  .budget-progress { background: white; padding: 18px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .budget-progress h4 { color: #0f766e; margin-bottom: 8px; font-size: 14px; }
+  .progress-bar { height: 18px; background: #e9ecef; border-radius: 10px; overflow: hidden; margin-bottom: 6px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #0f766e, #14b8a6); border-radius: 10px; transition: width 0.5s; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-size: 10px; font-weight: bold; }
+  .progress-info { display: flex; justify-content: space-between; font-size: 11px; color: #666; }
+  .vote-counter { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+  .vote-counter h4 { font-size: 16px; margin-bottom: 4px; }
+  .vote-counter p { font-size: 12px; opacity: 0.9; }
+  .counter-display { background: rgba(255,255,255,0.2); padding: 8px 18px; border-radius: 10px; text-align: center; }
+  .counter-display .num { font-size: 24px; font-weight: bold; }
+  .counter-display .lbl { font-size: 10px; }
+  
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin-top: 20px; }
+  .project-card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); border-left: 4px solid #0f766e; transition: 0.2s; cursor: pointer; }
+  .project-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+  .project-card.voted { border-left-color: #28a745; background: #f0fdf4; }
+  .project-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .project-icon { font-size: 32px; }
+  .project-title { font-size: 15px; font-weight: bold; color: #2c3e50; flex: 1; }
+  .project-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .badge-cat { background: #e0f2f1; color: #0f766e; padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+  .badge-quartier { background: #f0fdf4; color: #28a745; padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+  .project-desc { color: #555; font-size: 12px; margin-bottom: 10px; line-height: 1.4; min-height: 45px; }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11px; color: #666; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+  .project-footer { display: flex; justify-content: space-between; align-items: center; }
+  .vote-count { font-weight: bold; color: #0f766e; font-size: 14px; }
+  
+  .whatsapp-hero { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 40px 25px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
+  .whatsapp-hero h3 { font-size: 28px; margin-bottom: 12px; }
+  .whatsapp-hero p { font-size: 15px; opacity: 0.95; max-width: 600px; margin: 0 auto 20px; }
+  .whatsapp-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: start; }
+  .whatsapp-info { padding: 25px; }
+  .whatsapp-info h3 { color: #128C7E; margin-bottom: 12px; font-size: 18px; }
+  .wa-number { background: #f0fdf4; border: 2px dashed #25D366; padding: 12px; border-radius: 10px; text-align: center; margin: 15px 0; }
+  .wa-number .num { font-size: 20px; font-weight: bold; color: #128C7E; display: block; margin-bottom: 4px; }
+  .wa-number a { color: #25D366; text-decoration: none; font-weight: 600; font-size: 13px; }
+  .wa-features { list-style: none; margin: 15px 0; }
+  .wa-features li { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; align-items: flex-start; gap: 8px; font-size: 13px; }
+  .wa-features .ico { font-size: 18px; }
+  .phone-mockup { background: #1a1a1a; border-radius: 35px; padding: 10px; max-width: 300px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+  .phone-screen { background: #ECE5DD; border-radius: 25px; overflow: hidden; height: 500px; display: flex; flex-direction: column; }
+  .wa-header { background: #075E54; color: white; padding: 12px; display: flex; align-items: center; gap: 8px; }
+  .wa-header .avatar { width: 32px; height: 32px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
+  .wa-header .contact-info { flex: 1; }
+  .wa-header .contact-name { font-size: 13px; font-weight: 600; }
+  .wa-header .contact-status { font-size: 10px; opacity: 0.85; }
+  .wa-chat { flex: 1; padding: 12px 8px; overflow-y: auto; background: #ECE5DD; }
+  .wa-msg { margin-bottom: 6px; display: flex; }
+  .wa-msg.bot { justify-content: flex-start; }
+  .wa-msg.user { justify-content: flex-end; }
+  .wa-bubble { max-width: 80%; padding: 7px 10px; border-radius: 7px; font-size: 12px; line-height: 1.3; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+  .wa-msg.bot .wa-bubble { background: white; border-top-left-radius: 2px; }
+  .wa-msg.user .wa-bubble { background: #DCF8C6; border-top-right-radius: 2px; }
+  .wa-time { font-size: 9px; color: #999; text-align: right; margin-top: 2px; }
+  .wa-bubble strong { color: #128C7E; }
+  .wa-input-bar { background: #F0F0F0; padding: 6px; display: flex; align-items: center; gap: 5px; }
+  .wa-input-bar input { flex: 1; background: white; border: none; padding: 6px 10px; border-radius: 15px; font-size: 12px; }
+  .wa-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 25px; }
+  .wa-step { background: white; padding: 15px; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 3px solid #25D366; }
+  .wa-step .num { width: 35px; height: 35px; background: #25D366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 8px; }
+  .wa-step h4 { color: #128C7E; margin-bottom: 6px; font-size: 14px; }
+  .wa-step p { font-size: 12px; color: #555; }
+  .wa-cta { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 25px; border-radius: 12px; text-align: center; margin-top: 25px; }
+  .wa-cta h3 { font-size: 20px; margin-bottom: 8px; }
+  .wa-cta .btn { background: white; color: #128C7E; }
+  .wa-ussd { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 8px; margin-top: 15px; }
+  .wa-ussd h4 { color: #856404; margin-bottom: 6px; font-size: 14px; }
+  .wa-ussd code { background: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; color: #128C7E; font-size: 14px; }
+  
+  .mobile-preview { background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%); padding: 40px 20px; border-radius: 16px; margin-top: 40px; color: white; }
+  .mobile-preview h3 { text-align: center; font-size: 24px; margin-bottom: 8px; }
+  .mobile-preview > p { text-align: center; color: #ccc; margin-bottom: 25px; font-size: 14px; }
+  .mobile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 900px; margin: 0 auto; align-items: center; }
+  .mobile-features h4 { color: #14b8a6; margin: 15px 0 8px; font-size: 16px; }
+  .mobile-features ul { list-style: none; }
+  .mobile-features li { padding: 6px 0; display: flex; align-items: center; gap: 8px; color: #ddd; font-size: 13px; }
+  .mobile-features li:before { content: "✓"; color: #25D366; font-weight: bold; }
+  .mini-phone { background: #1a1a1a; border-radius: 25px; padding: 8px; max-width: 240px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+  .mini-screen { background: white; border-radius: 18px; overflow: hidden; height: 400px; }
+  .mini-header { background: #0f766e; color: white; padding: 10px; text-align: center; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .mini-header svg { width: 20px; height: 20px; }
+  .mini-content { padding: 10px; }
+  .mini-stat { background: #f5f7fa; padding: 8px; border-radius: 6px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .mini-stat .n { font-weight: bold; color: #0f766e; font-size: 14px; }
+  .mini-stat .l { font-size: 10px; color: #666; }
+  .mini-btn { background: #0f766e; color: white; padding: 8px; border-radius: 6px; text-align: center; font-size: 11px; font-weight: 600; margin-top: 8px; }
+  .mini-wa { background: #25D366; color: white; padding: 8px; border-radius: 6px; text-align: center; font-size: 11px; font-weight: 600; margin-top: 6px; }
+  .store-badges { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
+  .store-badge { background: white; color: #1a2332; padding: 8px 15px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  
+  .calendar { background: white; padding: 20px; border-radius: 10px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .calendar-step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
+  .calendar-step:last-child { border-bottom: none; }
+  .cal-num { width: 28px; height: 28px; background: #0f766e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 13px; }
+  .cal-info strong { color: #2c3e50; display: block; font-size: 14px; }
+  .cal-info span { font-size: 12px; color: #666; }
+  
+  .info-tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; background: white; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; font-size: 13px; }
+  .tab.active { background: #0f766e; color: white; border-color: #0f766e; }
+  .info-list { display: grid; gap: 12px; }
+  .info-item { padding: 18px; }
+  .info-item h4 { color: #0f766e; margin-bottom: 6px; font-size: 15px; }
+  .info-item .meta { font-size: 11px; color: #999; margin-bottom: 6px; }
+  .info-item p { font-size: 13px; color: #555; }
+  
+  .transparence-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .transparence-card { padding: 18px; }
+  .transparence-card h4 { color: #0f766e; margin-bottom: 12px; font-size: 15px; }
+  .dossier { padding: 10px; border-left: 3px solid #0f766e; background: #f8f9fa; margin-bottom: 8px; border-radius: 4px; }
+  .dossier.resolu { border-left-color: #28a745; }
+  .dossier.encours { border-left-color: #ffc107; }
+  .dossier.reçu { border-left-color: #17a2b8; }
+  .dossier strong { display: block; color: #2c3e50; font-size: 13px; }
+  .dossier span { font-size: 11px; color: #666; }
+  .indicator { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+  .indicator:last-child { border-bottom: none; }
+  .indicator .value { font-weight: bold; color: #0f766e; }
+  .indicator .change { font-size: 11px; color: #28a745; }
+  .bar-chart { margin-top: 12px; }
+  .bar-item { margin-bottom: 8px; }
+  .bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px; }
+  .bar { height: 7px; background: #e9ecef; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, #0f766e, #14b8a6); border-radius: 4px; }
+  
+  .faq-item { background: white; margin-bottom: 8px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+  .faq-q { padding: 15px 18px; cursor: pointer; font-weight: 600; color: #2c3e50; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+  .faq-q:hover { background: #f8f9fa; }
+  .faq-a { padding: 0 18px; max-height: 0; overflow: hidden; transition: 0.3s; color: #555; font-size: 13px; }
+  .faq-item.open .faq-a { padding: 0 18px 15px; max-height: 300px; }
+  .faq-item.open .faq-q span { transform: rotate(180deg); }
+  .faq-q span { transition: 0.3s; }
+  
+  .cta { background: linear-gradient(135deg, #0f766e, #14b8a6); color: white; padding: 50px 20px; text-align: center; border-radius: 12px; margin: 50px auto; max-width: 1200px; }
+  .cta h2 { font-size: 28px; margin-bottom: 12px; }
+  .cta p { font-size: 15px; margin-bottom: 20px; opacity: 0.95; }
+  
+  footer { background: #1a2332; color: white; padding: 40px 20px 15px; }
+  .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; }
+  .footer-col h3 { color: #14b8a6; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .footer-col h3 svg { width: 25px; height: 25px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 6px; }
+  .footer-col a { color: #ccc; text-decoration: none; font-size: 13px; }
+  .footer-col a:hover { color: white; }
+  .footer-col p { color: #ccc; font-size: 13px; margin-bottom: 6px; }
+  .footer-bottom { max-width: 1200px; margin: 25px auto 0; padding-top: 15px; border-top: 1px solid #333; text-align: center; color: #888; font-size: 12px; }
+  
+  .chat-toggle { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0f766e, #14b8a6); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(15,118,110,0.4); z-index: 999; border: none; }
+  .chat-window { position: fixed; bottom: 90px; right: 20px; width: 360px; max-width: calc(100vw - 40px); height: 520px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 999; overflow: hidden; }
+  .chat-window.open { display: flex; }
+  .chat-header { background: linear-gradient(135deg, #0f766e, #14b8a6); color: white; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .chat-header h4 { font-size: 14px; }
+  .chat-header .status { font-size: 11px; opacity: 0.9; }
+  .chat-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+  .chat-messages { flex: 1; padding: 12px; overflow-y: auto; background: #f8f9fa; }
+  .chat-msg { margin-bottom: 10px; display: flex; }
+  .chat-msg.bot { justify-content: flex-start; }
+  .chat-msg.user { justify-content: flex-end; }
+  .chat-bubble { max-width: 85%; padding: 9px 12px; border-radius: 10px; font-size: 13px; line-height: 1.4; }
+  .chat-msg.bot .chat-bubble { background: white; color: #2c3e50; border-bottom-left-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .chat-msg.user .chat-bubble { background: #0f766e; color: white; border-bottom-right-radius: 3px; }
+  .chat-quick { padding: 8px 12px; background: white; border-top: 1px solid #eee; display: flex; gap: 5px; flex-wrap: wrap; }
+  .quick-btn { padding: 5px 10px; background: #e0f2f1; color: #0f766e; border: none; border-radius: 15px; font-size: 11px; cursor: pointer; font-weight: 600; }
+  .quick-btn:hover { background: #0f766e; color: white; }
+  .chat-input { padding: 10px; background: white; border-top: 1px solid #eee; display: flex; gap: 6px; }
+  .chat-input input { flex: 1; padding: 7px 10px; border: 1px solid #ddd; border-radius: 18px; font-size: 13px; }
+  .chat-input button { background: #0f766e; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 14px; }
+  .typing-indicator { display: inline-flex; gap: 3px; padding: 6px 10px; }
+  .typing-indicator span { width: 5px; height: 5px; background: #999; border-radius: 50%; animation: typing 1.4s infinite; }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%, 60%, 100% { opacity: 0.3; } 30% { opacity: 1; } }
+  
+  .admin-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; }
+  .admin-overlay.open { display: flex; }
+  .admin-panel { background: white; width: 95%; max-width: 1000px; height: 85vh; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .admin-header { background: #1a2332; color: white; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .admin-header h3 { font-size: 16px; }
+  .admin-tabs { display: flex; background: #2c3e50; overflow-x: auto; }
+  .admin-tab { padding: 10px 18px; color: #ccc; cursor: pointer; font-size: 13px; white-space: nowrap; }
+  .admin-tab.active { background: #0f766e; color: white; }
+  .admin-body { flex: 1; overflow-y: auto; padding: 18px; }
+  .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .admin-stat-card { background: #f8f9fa; padding: 12px; border-radius: 8px; text-align: center; }
+  .admin-stat-card .num { font-size: 22px; font-weight: bold; color: #0f766e; }
+  .admin-stat-card .lbl { font-size: 11px; color: #666; }
+  table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
+  th, td { padding: 8px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #f8f9fa; font-weight: 600; color: #2c3e50; }
+  .badge { padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: 600; }
+  .badge-reçu { background: #d1ecf1; color: #0c5460; }
+  .badge-encours { background: #fff3cd; color: #856404; }
+  .badge-résolu { background: #d4edda; color: #155724; }
+  .action-btn { padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; margin-right: 3px; }
+  .btn-view { background: #17a2b8; color: white; }
+  .btn-edit { background: #ffc107; color: #2c3e50; }
+  .btn-del { background: #dc3545; color: white; }
+  .add-btn { background: #28a745; color: white; padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-size: 12px; }
+  
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1100; display: none; align-items: center; justify-content: center; padding: 15px; }
+  .modal.open { display: flex; }
+  .modal-content { background: white; border-radius: 12px; width: 100%; max-width: 550px; max-height: 90vh; overflow-y: auto; }
+  .modal-header { padding: 12px 18px; background: #0f766e; color: white; display: flex; justify-content: space-between; align-items: center; border-radius: 12px 12px 0 0; }
+  .modal-header h3 { font-size: 16px; }
+  .modal-body { padding: 18px; }
+  .modal-footer { padding: 12px 18px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 8px; }
+  .modal-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+  .success-modal .modal-content { text-align: center; }
+  .success-icon { font-size: 50px; color: #28a745; margin: 15px 0; }
+  .dossier-number { background: #e0f2f1; padding: 10px; border-radius: 8px; font-size: 16px; font-weight: bold; color: #0f766e; margin: 12px 0; }
+  
+  .project-detail-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 2px solid #e0f2f1; }
+  .project-detail-icon { font-size: 40px; }
+  .project-detail-title { font-size: 18px; font-weight: bold; color: #0f766e; margin-bottom: 3px; }
+  .project-detail-id { font-size: 11px; color: #666; }
+  .detail-section { margin-bottom: 15px; }
+  .detail-section h4 { color: #0f766e; margin-bottom: 8px; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+  .detail-section p { color: #555; font-size: 13px; line-height: 1.5; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .detail-item { background: #f8f9fa; padding: 10px; border-radius: 8px; }
+  .detail-item .lbl { font-size: 10px; color: #666; margin-bottom: 2px; }
+  .detail-item .val { font-size: 13px; font-weight: bold; color: #2c3e50; }
+  .vote-section { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center; }
+  .vote-section .current-votes { font-size: 20px; font-weight: bold; color: #0f766e; margin-bottom: 8px; }
+  
+  
+  /* === OPTION A / OPTION B === */
+  .signalement-options { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+  .option-card { background: white; border-radius: 16px; padding: 30px; text-align: center; cursor: pointer; transition: 0.3s; border: 3px solid transparent; position: relative; overflow: hidden; }
+  .option-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+  .option-card.selected { border-color: #0f766e; box-shadow: 0 8px 25px rgba(15,118,110,0.15); }
+  .option-card .opt-icon { font-size: 48px; margin-bottom: 12px; }
+  .option-card .opt-title { font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 8px; }
+  .option-card .opt-desc { font-size: 13px; color: #666; line-height: 1.5; }
+  .option-card .opt-badge { display: inline-block; background: #e0f2f1; color: #0f766e; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 10px; }
+  .option-card.option-b { background: linear-gradient(135deg, #fff8f0 0%, #fff3e0 100%); }
+  .option-card.option-b:hover { border-color: #e65100; }
+  .option-card.option-b.selected { border-color: #e65100; }
+  .option-card.option-b .opt-badge { background: #ffe0b2; color: #e65100; }
+  .option-panel { display: none; animation: fadeIn 0.4s ease; }
+  .option-panel.active { display: block; }
+  .option-back { display: inline-flex; align-items: center; gap: 6px; color: #0f766e; font-size: 13px; cursor: pointer; margin-bottom: 15px; font-weight: 600; }
+  .option-back:hover { text-decoration: underline; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* === ENREGISTREUR AUDIO === */
+  .audio-recorder { background: #f8f9fa; border: 2px dashed #ddd; border-radius: 12px; padding: 25px; text-align: center; transition: 0.3s; }
+  .audio-recorder.recording { border-color: #dc3545; background: #fff5f5; }
+  .audio-recorder.has-audio { border-color: #28a745; background: #f0fdf4; }
+  .rec-btn { width: 65px; height: 65px; border-radius: 50%; border: none; cursor: pointer; font-size: 26px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; margin: 0 10px; }
+  .rec-btn.record { background: #dc3545; color: white; box-shadow: 0 4px 15px rgba(220,53,69,0.3); }
+  .rec-btn.record:hover { transform: scale(1.08); }
+  .rec-btn.stop { background: #6c757d; color: white; }
+  .rec-btn.play { background: #0f766e; color: white; }
+  .rec-btn.del { background: #ffc107; color: #2c3e50; }
+  .rec-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+  .rec-status { font-size: 14px; color: #666; margin-top: 12px; font-weight: 600; }
+  .rec-status.recording { color: #dc3545; }
+  .rec-timer { font-size: 32px; font-weight: bold; color: #0f766e; margin: 10px 0; font-variant-numeric: tabular-nums; }
+  .audio-wave { display: flex; align-items: center; justify-content: center; gap: 3px; height: 35px; margin: 12px 0; }
+  .audio-wave span { width: 4px; background: #0f766e; border-radius: 2px; animation: wave 1s ease-in-out infinite; }
+  .audio-wave.recording span { background: #dc3545; }
+  .audio-wave span:nth-child(1) { height: 10px; animation-delay: 0s; }
+  .audio-wave span:nth-child(2) { height: 18px; animation-delay: 0.1s; }
+  .audio-wave span:nth-child(3) { height: 25px; animation-delay: 0.2s; }
+  .audio-wave span:nth-child(4) { height: 15px; animation-delay: 0.3s; }
+  .audio-wave span:nth-child(5) { height: 22px; animation-delay: 0.4s; }
+  .audio-wave span:nth-child(6) { height: 12px; animation-delay: 0.5s; }
+  .audio-wave span:nth-child(7) { height: 20px; animation-delay: 0.6s; }
+  .audio-wave span:nth-child(8) { height: 14px; animation-delay: 0.7s; }
+  .audio-wave span:nth-child(9) { height: 24px; animation-delay: 0.8s; }
+  .audio-wave span:nth-child(10) { height: 10px; animation-delay: 0.9s; }
+  @keyframes wave { 0%, 100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
+  .audio-player { width: 100%; margin-top: 12px; }
+  .vocal-form { background: linear-gradient(135deg, #fff8f0 0%, #fff3e0 100%); border-radius: 16px; padding: 30px; }
+  .vocal-form h3 { color: #e65100; margin-bottom: 8px; font-size: 20px; }
+  .vocal-form > p { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .vocal-helper { background: #fff3e0; border-left: 4px solid #e65100; padding: 14px; border-radius: 8px; margin: 15px 0; font-size: 13px; color: #5d4037; }
+  .vocal-helper strong { color: #e65100; }
+  .vocal-submit { background: #e65100; color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.2s; }
+  .vocal-submit:hover { background: #bf360c; }
+  .vocal-submit:disabled { background: #ccc; cursor: not-allowed; }
+  .vocal-success-icon { font-size: 60px; margin-bottom: 10px; }
+
+  
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .hero h2 { font-size: 26px; }
+    .bdc-grid, .form-grid, .whatsapp-layout, .mobile-grid, .detail-grid { grid-template-columns: 1fr; }
+    .chat-window { width: calc(100vw - 30px); right: 15px; bottom: 80px; }
+    .phone-mockup { max-width: 260px; }
+    .phone-screen { height: 450px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .signalement-options { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>🏛️ Commune des Lacs 1 — République Togolaise</div>
+  <div>☎ +228 93 91 00 90 | ✉ <a href="mailto:bdc@lacs1.mairie.tg">bdc@lacs1.mairie.tg</a></div>
+</div>
+
+<header>
+  <div class="header-content">
+    <div class="logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,5 L62,12 L50,35 L38,12 Z" fill="#0d7377"/><path d="M62,12 L78,22 L50,35 Z" fill="#5eb5a8"/><path d="M78,22 L88,38 L50,35 Z" fill="#0d7377"/><path d="M88,38 L95,50 L50,50 L50,35 Z" fill="#5eb5a8"/><path d="M95,50 L88,62 L50,50 Z" fill="#0d7377"/><path d="M88,62 L78,78 L50,50 Z" fill="#5eb5a8"/><path d="M78,78 L62,88 L50,65 L50,50 Z" fill="#0d7377"/><path d="M62,88 L50,95 L50,65 Z" fill="#5eb5a8"/><path d="M50,95 L38,88 L50,65 Z" fill="#0d7377"/><path d="M38,88 L22,78 L50,50 Z" fill="#5eb5a8"/><path d="M22,78 L12,62 L50,50 Z" fill="#0d7377"/><path d="M12,62 L5,50 L50,50 Z" fill="#5eb5a8"/><path d="M5,50 L12,38 L50,50 L50,35 Z" fill="#5eb5a8"/><path d="M12,38 L22,22 L50,35 Z" fill="#0d7377"/><path d="M22,22 L38,12 L50,35 Z" fill="#5eb5a8"/>
+        <circle cx="50" cy="50" r="18" fill="white"/><circle cx="50" cy="45" r="7" fill="#0d7377"/><path d="M45,48 L55,48 L53,62 Q53,65 50,65 Q47,65 47,62 Z" fill="#0d7377"/>
+      </svg>
+      <div class="logo-text">
+        <h1>OPENCIVIC</h1>
+        <p>Espace Vie Citoyenne — Commune des Lacs 1</p>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#bureau">BDC</a></li>
+        <li><a href="#signaler">Signaler</a></li>
+        <li><a href="#initiative">Initiatives</a></li>
+        <li><a href="#budget">Budget</a></li>
+        <li><a href="#whatsapp" class="whatsapp">📱 WhatsApp</a></li>
+        <li><a href="#info-mairie">Info</a></li>
+        <li><a href="#tableau">Transparence</a></li>
+        <li><a href="#mobile"> App</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#admin" class="admin">🔐 Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="accueil">
+  <h2>Votre voix fait avancer la ville</h2>
+  <p>Signalez, proposez, votez — tout depuis votre téléphone ou via WhatsApp. Le Bureau du Citoyen vous écoute et vous oriente.</p>
+  <div class="hero-buttons">
+    <a href="#signaler" class="btn btn-primary">📣 Faire un signalement (ecrit ou vocal)</a>
+    <a href="#initiative" class="btn btn-secondary"> Proposer un projet</a>
+    <a href="#whatsapp" class="btn btn-whatsapp">📱 Via WhatsApp</a>
+  </div>
+  <p class="hero-note">️ Une initiative de la Mairie de la Commune des Lacs 1</p>
+</section>
+
+<div class="stats">
+  <div class="stat-card"><div class="stat-number" id="statMois">128</div><div class="stat-label">Signalements ce mois</div></div>
+  <div class="stat-card"><div class="stat-number" id="statResolus">1 847</div><div class="stat-label">Dossiers résolus</div></div>
+  <div class="stat-card"><div class="stat-number" id="statDelai">6,2 j</div><div class="stat-label">Délai moyen</div></div>
+  <div class="stat-card"><div class="stat-number" id="statSatisfaction">91%</div><div class="stat-label">Satisfaction</div></div>
+</div>
+
+<section>
+  <div class="section-title"><h2>Le parcours citoyen</h2><p>Un circuit simple et transparent, du signalement à la résolution.</p></div>
+  <div class="parcours">
+    <div class="parcours-step"><div class="step-number">1</div><h3>Je signale</h3><p>En ligne (ecrit ou 🎙️ vocal), au guichet du BDC, par telephone ou via WhatsApp. Numero de dossier immediat.</p></div>
+    <div class="parcours-step"><div class="step-number">2</div><h3>🗂️ Le BDC oriente</h3><p>Le Bureau du Citoyen qualifie et transmet au service municipal compétent sous 48h ouvrées.</p></div>
+    <div class="parcours-step"><div class="step-number">3</div><h3>La mairie agit</h3><p>Les équipes techniques interviennent. Notification à chaque étape (WhatsApp/SMS/Email).</p></div>
+    <div class="parcours-step"><div class="step-number">4</div><h3>✅ Je suis informé</h3><p>Clôture avec compte rendu. Évaluation et recours possible via le médiateur.</p></div>
+  </div>
+</section>
+
+<section id="bureau">
+  <div class="section-title"><h2>Guichet unique de médiation</h2><p>Le Bureau du Citoyen (BDC) — médiateur et orienteur entre les habitants et les services de la Mairie.</p></div>
+  <div class="bdc-section">
+    <div class="bdc-grid">
+      <div class="bdc-engagements">
+        <h3 style="color:#0f766e; margin-bottom:12px;">Nos missions</h3>
+        <ul>
+          <li><strong>Accueil et orientation</strong> — Nous vous orientons vers le bon service de la Mairie</li>
+          <li><strong>Médiation</strong> — Nous facilitons le dialogue citoyen-administration</li>
+          <li><strong>Suivi des dossiers</strong> — Nous suivons l'avancement de vos demandes</li>
+          <li><strong>Réception des signalements</strong> — Nous enregistrons et transmettons</li>
+          <li><strong>Assistance numérique</strong> — Nous vous aidons avec OPENCIVIC</li>
+          <li><strong>Recours citoyen</strong> — Nous transmettons vos réclamations au médiateur</li>
+        </ul>
+        <p style="margin-top:12px; padding:10px; background:#fff3cd; border-left:4px solid #ffc107; border-radius:6px; font-size:12px; color:#856404;">
+          ️ <strong>Précision :</strong> Le BDC ne délivre PAS directement les actes d'état civil ou les autorisations. Ces services sont assurés par les directions techniques de la Mairie. Le BDC vous y oriente.
+        </p>
+      </div>
+      <div class="bdc-contact">
+        <h3> Nous rencontrer</h3>
+        <p><strong>Maison de la Femme</strong><br>Route N°2, en face d'Ecobank, carrefour 13 janvier</p>
+        <p><strong>🕒 Horaires</strong><br>Lun–Ven : 8h30–17h30 · Sam : 9h–12h</p>
+        <p><strong>☎ Ligne citoyenne</strong><br>+228 93 91 00 90 / 97 34 66 29</p>
+        <p><strong>✉ Courriel</strong><br><a href="mailto:bdc@lacs1.mairie.tg" style="color:#0f766e;">bdc@lacs1.mairie.tg</a></p>
+        <p><strong>📱 WhatsApp</strong><br><a href="https://wa.me/22893910090" style="color:#25D366; font-weight:600;">+228 93 91 00 90</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="signaler">
+  <div class="section-title"><h2>Exprimez-vous</h2><p>Choisissez la méthode qui vous convient le mieux. Le BDC traite tous les signalements avec la même attention.</p></div>
+
+  <!-- CHOIX DES OPTIONS -->
+  <div id="optionChooser" class="signalement-options">
+    <div class="option-card" onclick="selectOption('A')" id="optA">
+      <div class="opt-icon">📝</div>
+      <div class="opt-title">Option A — Par écrit</div>
+      <div class="opt-desc">Remplissez le formulaire avec toutes les informations. Idéal si vous pouvez écrire.</div>
+      <div class="opt-badge">Formulaire classique</div>
+    </div>
+    <div class="option-card option-b" onclick="selectOption('B')" id="optB">
+      <div class="opt-icon">🎙️</div>
+      <div class="opt-title">Option B — Par message vocal</div>
+      <div class="opt-desc">Parlez directement dans le micro. Aucune écriture nécessaire. Pour tous, même sans savoir lire.</div>
+      <div class="opt-badge">🎯 Recommandé si analphabète</div>
+    </div>
+  </div>
+
+  <!-- OPTION A : FORMULAIRE TEXTE -->
+  <div id="panelA" class="option-panel">
+    <div class="option-back" onclick="backToOptions()">← Retour au choix</div>
+    <div class="form-section">
+      <form id="signalementForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Catégorie *</label>
+            <select id="formCat" required>
+              <option value="">— Choisir —</option>
+              <option>🛣️ Voirie</option><option>🗑️ Propreté</option><option>💡 Éclairage</option>
+              <option>🛡️ Sécurité</option><option>🌳 Environnement</option><option>🔊 Nuisances</option>
+              <option>🚰 Eau</option><option>🚌 Mobilité</option><option>💬 Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Objet *</label>
+            <input type="text" id="formObjet" required placeholder="Ex: Nid-de-poule...">
+          </div>
+          <div class="form-group full">
+            <label>Description *</label>
+            <textarea id="formDesc" required placeholder="Décrivez précisément..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Quartier *</label>
+            <select id="formQuartier" required>
+              <option value="">— Choisir —</option>
+              <option>Djamadji-Ela</option><option>Nlessi</option><option>Zongo</option><option>Amadoté</option>
+              <option>Kpota 1</option><option>Kpota 2</option><option>Condji Habitat</option><option>Messan</option>
+              <option>Jéricho</option><option>Avémé</option><option>Landjo</option><option>Toute la commune</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Adresse / repère</label>
+            <input type="text" id="formAdresse" placeholder="Ex: En face de l'école...">
+          </div>
+          <div class="form-group">
+            <label>Photo (facultatif)</label>
+            <input type="file">
+          </div>
+          <div class="form-group">
+            <label>Nom (facultatif)</label>
+            <input type="text" id="formNom" placeholder="Facultatif si anonyme">
+          </div>
+          <div class="form-group">
+            <label>Contact</label>
+            <input type="text" id="formContact" placeholder="Tél ou email">
+          </div>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="anonyme"><label for="anonyme" style="margin:0; font-weight:normal;">Rester anonyme</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="notif" checked><label for="notif" style="margin:0; font-weight:normal;">Notifications WhatsApp/SMS/Email</label>
+        </div>
+        <button type="submit" class="submit-btn">Envoyer au Bureau du Citoyen</button>
+        <div class="form-info">
+          ℹ️ Urgences : 117 (police) · 118 (pompiers)<br>
+          ⏱️ Prise en charge sous 48h · 📱 Disponible aussi sur WhatsApp
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- OPTION B : MESSAGE VOCAL (ultra-simple) -->
+  <div id="panelB" class="option-panel">
+    <div class="option-back" onclick="backToOptions()">← Retour au choix</div>
+    <div class="vocal-form">
+      <h3>🎙️ Laissez un message vocal</h3>
+      <p>Pas besoin de lire ni d'ecrire. Parlez, le BDC ecoutera et traitera votre signalement.</p>
+
+      <form id="vocalForm">
+        <!-- Instructions visuelles simples -->
+        <div class="vocal-helper" style="text-align:center; font-size:15px; margin-bottom:20px;">
+          <strong>🗣️ Dites dans le micro :</strong><br><br>
+          <span style="font-size:22px;">🙋‍♂️</span> Votre nom<br>
+          <span style="font-size:22px;">🏘️</span> Votre quartier et rue<br>
+          <span style="font-size:22px;">⚠️</span> Le probleme que vous voyez<br><br>
+          <em style="font-size:13px;">Parlez fort et clairement. Maximum 2 minutes.</em>
+        </div>
+
+        <!-- Enregistreur vocal -->
+        <div class="audio-recorder" id="audioRecorder" style="margin-bottom:20px;">
+          <div class="audio-wave" id="audioWave">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="rec-timer" id="recTimer">00:00</div>
+          <div>
+            <button type="button" class="rec-btn record" id="btnRecord" onclick="startRecording()" title="Parler">🎙️</button>
+            <button type="button" class="rec-btn stop" id="btnStop" onclick="stopRecording()" disabled title="Arreter">⏹️</button>
+            <button type="button" class="rec-btn play" id="btnPlay" onclick="playRecording()" disabled title="Ecouter">▶️</button>
+            <button type="button" class="rec-btn del" id="btnDel" onclick="deleteRecording()" disabled title="Effacer">🗑️</button>
+          </div>
+          <div class="rec-status" id="recStatus">Touchez le micro rouge pour parler</div>
+          <audio id="audioPlayback" class="audio-player" controls style="display:none;"></audio>
+          <input type="hidden" id="audioBlob" name="audioBlob">
+        </div>
+
+        <!-- Telephone facultatif -->
+        <div style="background:#fff; padding:15px; border-radius:10px; margin-bottom:15px;">
+          <p style="font-size:13px; font-weight:600; color:#555; margin-bottom:8px;">📞 Votre telephone (facultatif) :</p>
+          <input type="text" id="vocalContact" placeholder="Ex: 93 91 00 90" style="font-size:16px;">
+          <p style="font-size:11px; color:#888; margin-top:4px;">Pour que le BDC puisse vous rappeler</p>
+        </div>
+
+        <button type="submit" class="vocal-submit" id="vocalSubmit" disabled>📤 Envoyer mon message au BDC</button>
+        <p style="font-size:11px; color:#888; text-align:center; margin-top:8px;">⏱️ Max 2 minutes · Le BDC ecoute et repond sous 48h</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="initiative">
+  <div class="section-title"><h2>💡 Initiative Locale</h2><p>Proposez vos projets de développement — le BDC les transmet aux services municipaux pour étude.</p></div>
+  <div class="initiative-banner">
+    <h3>🌍 Vous avez une idée pour votre quartier ?</h3>
+    <p>Les projets les plus soutenus sont examinés par les services municipaux et peuvent intégrer le Budget Participatif.</p>
+  </div>
+  <div class="initiative-stats">
+    <div class="initiative-stat"><div class="num">7</div><div class="lbl">Initiatives</div></div>
+    <div class="initiative-stat"><div class="num">2</div><div class="lbl">✅ Validées</div></div>
+    <div class="initiative-stat"><div class="num">506</div><div class="lbl">Soutiens ❤️</div></div>
+    <div class="initiative-stat"><div class="num">5</div><div class="lbl">Quartiers</div></div>
+  </div>
+  <div class="initiative-form-section">
+    <h3>📝 Proposer une initiative</h3>
+    <form id="initiativeForm">
+      <div class="form-grid">
+        <div class="form-group full"><label>Titre *</label><input type="text" id="initTitre" required placeholder="Ex: Jardin partagé à Kpota"></div>
+        <div class="form-group">
+          <label>Catégorie *</label>
+          <select id="initCat" required>
+            <option value="">— Choisir —</option>
+            <option>🛣️ Aménagement</option><option>🌳 Environnement</option><option> Éducation</option>
+            <option> Culture</option><option>⚽ Sport</option><option>🤝 Solidarité</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Quartier *</label>
+          <select id="initQuartier" required>
+            <option value="">— Choisir —</option>
+            <option>Kpota 1</option><option>Djamadji-Ela</option><option>Zongo</option>
+            <option>Amadoté</option><option>Condji Habitat</option><option>Toute la commune</option>
+          </select>
+        </div>
+        <div class="form-group full"><label>Description *</label><textarea id="initDesc" required placeholder="Décrivez votre projet..."></textarea></div>
+        <div class="form-group"><label>Coût estimé (FCFA)</label><input type="number" id="initCout" placeholder="Ex: 2500000"></div>
+        <div class="form-group"><label>Durée</label><input type="text" id="initDuree" placeholder="Ex: 3 mois"></div>
+        <div class="form-group"><label>Votre nom *</label><input type="text" id="initAuteur" required></div>
+        <div class="form-group"><label>Contact *</label><input type="text" id="initContactAuteur" required></div>
+      </div>
+      <button type="submit" class="submit-btn" style="background:#28a745;">💡 Soumettre mon initiative</button>
+    </form>
+  </div>
+</section>
+
+<section id="budget">
+  <div class="section-title"><h2>🗳️ Budget Participatif 2026</h2><p>Vous décidez, la mairie réalise ! Votez pour les projets qui amélioreront votre quotidien.</p></div>
+  <div class="budget-header">
+    <div class="budget-stat"><div class="num">12</div><div class="lbl">Projets proposés</div></div>
+    <div class="budget-stat"><div class="num" id="totalVotesDisplay">0</div><div class="lbl">Votes exprimés</div></div>
+    <div class="budget-stat"><div class="num">45 M</div><div class="lbl">Budget (FCFA)</div></div>
+    <div class="budget-stat"><div class="num">18</div><div class="lbl">Jours restants</div></div>
+  </div>
+  <div class="budget-progress">
+    <h4> Budget engagé selon les votes actuels</h4>
+    <div class="progress-bar"><div class="progress-fill" id="budgetProgressFill" style="width: 0%;">0%</div></div>
+    <div class="progress-info">
+      <span id="budgetUsed">0 FCFA engagés</span>
+      <span id="budgetRemaining">45 000 000 FCFA restants</span>
+    </div>
+  </div>
+  <div class="vote-counter">
+    <div>
+      <h4>🗳️ Mes votes</h4>
+      <p>Vous pouvez voter pour <strong>3 projets maximum</strong>. Cliquez sur un projet pour voir les détails.</p>
+    </div>
+    <div class="counter-display">
+      <div class="num"><span id="myVotesCount">0</span> / 3</div>
+      <div class="lbl">Votes utilisés</div>
+    </div>
+  </div>
+  <h3 style="color:#0f766e; margin-bottom:12px;">📋 Projets soumis au vote</h3>
+  <p style="color:#666; margin-bottom:15px; font-size:13px;">Cliquez sur un projet pour voir les détails complets. Choisissez jusqu'à 3 projets.</p>
+  <div class="projects-grid" id="projectsGrid"></div>
+  <div class="calendar">
+    <h3 style="color:#0f766e; margin-bottom:12px;">📅 Calendrier</h3>
+    <div class="calendar-step"><div class="cal-num">1</div><div class="cal-info"><strong>Collecte des idées</strong><span>1er–30 juin 2026 · Terminée</span></div></div>
+    <div class="calendar-step"><div class="cal-num">2</div><div class="cal-info"><strong>Étude de faisabilité</strong><span>1er–31 juillet 2026 · Terminée</span></div></div>
+    <div class="calendar-step"><div class="cal-num">3</div><div class="cal-info"><strong>Vote citoyen</strong><span>1er–31 août 2026 · En cours</span></div></div>
+    <div class="calendar-step"><div class="cal-num">4</div><div class="cal-info"><strong>Annonce des résultats</strong><span>15 septembre 2026</span></div></div>
+    <div class="calendar-step"><div class="cal-num">5</div><div class="cal-info"><strong>Réalisation</strong><span>Oct 2026 – Mars 2027</span></div></div>
+  </div>
+</section>
+
+<section id="whatsapp">
+  <div class="section-title"><h2>📱 OPENCIVIC sur WhatsApp</h2><p>Tous les services du BDC directement depuis WhatsApp — sans app à installer.</p></div>
+  <div class="whatsapp-hero">
+    <div style="font-size:45px; margin-bottom:10px;">💬</div>
+    <h3>Votre mairie à portée de message</h3>
+    <p>Pas de smartphone ? Pas d'app à télécharger ! Contactez le BDC via WhatsApp. Disponible 24h/24, même sur téléphones basiques (KaiOS).</p>
+    <a href="https://wa.me/22893910090?text=Bonjour%20BDC" class="btn" style="background:white; color:#128C7E;"> Démarrer une conversation</a>
+  </div>
+  <div class="whatsapp-layout">
+    <div>
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="wa-header">
+            <div class="avatar">BDC</div>
+            <div class="contact-info"><div class="contact-name">Bureau du Citoyen</div><div class="contact-status">en ligne</div></div>
+          </div>
+          <div class="wa-chat">
+            <div class="wa-msg bot"><div class="wa-bubble">👋 Bonjour ! Je suis l'assistant du <strong>BDC</strong>.<br><br>🏛️ <strong>1.</strong> Rôle du BDC<br>📄 <strong>2.</strong> État Civil (Mairie)<br>🏗️ <strong>3.</strong> Autorisations (Mairie)<br>📣 <strong>4.</strong> Signalement<div class="wa-time">09:41 ✓✓</div></div></div>
+            <div class="wa-msg user"><div class="wa-bubble">2<div class="wa-time">09:42 ✓✓</div></div></div>
+            <div class="wa-msg bot"><div class="wa-bubble">📄 <strong>État Civil de la Mairie</strong><br><br>👶 Naissance · 💍 Mariage<br>🕊️ Décès ·  Certificat de vie<br><br>Le BDC vous oriente vers le guichet compétent. Quel acte vous intéresse ?<div class="wa-time">09:42 ✓✓</div></div></div>
+            <div class="wa-msg user"><div class="wa-bubble">Naissance<div class="wa-time">09:43 ✓✓</div></div></div>
+            <div class="wa-msg bot"><div class="wa-bubble"> <strong>Acte de naissance</strong><br><br>⏱️ Délai : 30 jours (gratuit)<br>📍 Guichet État Civil — Mairie RDC<br><br>💡 Le BDC peut vous aider à préparer le dossier.<div class="wa-time">09:44 ✓✓</div></div></div>
+          </div>
+          <div class="wa-input-bar"><input type="text" placeholder="Message" disabled></div>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:12px; color:#666; font-size:12px; font-style:italic;">👆 Aperçu d'une conversation type</p>
+    </div>
+    <div class="whatsapp-info">
+      <h3>💬 Pourquoi WhatsApp ?</h3>
+      <p style="color:#555; font-size:13px;">WhatsApp est la messagerie la plus utilisée au Togo. Elle fonctionne même sur téléphones basiques.</p>
+      <div class="wa-number">
+        <span class="num">📱 +228 93 91 00 90</span>
+        <a href="https://wa.me/22893910090" target="_blank">💬 Ouvrir la conversation →</a>
+      </div>
+      <h4 style="color:#128C7E; margin:12px 0 8px; font-size:14px;">✨ Services disponibles via le BDC</h4>
+      <ul class="wa-features">
+        <li><span class="ico">🏛️</span><div><strong>Rôle du BDC</strong> — Médiation et orientation</div></li>
+        <li><span class="ico">📄</span><div><strong>État Civil</strong> — Orientation vers le service Mairie</div></li>
+        <li><span class="ico">🏗️</span><div><strong>Autorisations</strong> — Orientation vers les services techniques</div></li>
+        <li><span class="ico"></span><div><strong>Signalements</strong> — Enregistrement et transmission</div></li>
+        <li><span class="ico"></span><div><strong>Initiatives locales</strong> — Proposition de projets</div></li>
+        <li><span class="ico">🗳️</span><div><strong>Budget participatif</strong> — Information et vote</div></li>
+      </ul>
+      <div class="wa-ussd">
+        <h4>📞 Pas de WhatsApp ?</h4>
+        <p style="font-size:12px;">Code USSD depuis n'importe quel téléphone :</p>
+        <p style="text-align:center; font-size:16px;"><code>*123#</code></p>
+      </div>
+    </div>
+  </div>
+  <div class="wa-steps">
+    <div class="wa-step"><div class="num">1</div><h4>Enregistrez</h4><p>+228 93 91 00 90 dans vos contacts</p></div>
+    <div class="wa-step"><div class="num">2</div><h4>Envoyez "Bonjour"</h4><p>Ouvrez WhatsApp et écrivez au BDC</p></div>
+    <div class="wa-step"><div class="num">3</div><h4>Choisissez</h4><p>Répondez avec le numéro du service</p></div>
+    <div class="wa-step"><div class="num">4</div><h4>Suivez</h4><p>Le BDC vous oriente et suit votre dossier</p></div>
+  </div>
+  <div class="wa-cta">
+    <h3>💬 Prêt à essayer ?</h3>
+    <p style="font-size:13px; margin-bottom:15px;">Cliquez pour démarrer avec le Bureau du Citoyen</p>
+    <a href="https://wa.me/22893910090?text=Bonjour%20BDC" class="btn" target="_blank">💬 Ouvrir WhatsApp</a>
+  </div>
+</section>
+
+<section id="mobile">
+  <div class="section-title"><h2>📲 L'application mobile OPENCIVIC</h2><p>Tous les services du BDC dans votre poche — disponible sur Android et iOS.</p></div>
+  <div class="mobile-preview">
+    <h3>📱 Téléchargez l'app mobile</h3>
+    <p>React Native · Notifications push · GPS · Photos · Mode hors-ligne</p>
+    <div class="mobile-grid">
+      <div class="mini-phone">
+        <div class="mini-screen">
+          <div class="mini-header">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50,5 L62,12 L50,35 L38,12 Z" fill="#0d7377"/><path d="M62,12 L78,22 L50,35 Z" fill="#5eb5a8"/><path d="M78,22 L88,38 L50,35 Z" fill="#0d7377"/><path d="M88,38 L95,50 L50,50 L50,35 Z" fill="#5eb5a8"/><path d="M95,50 L88,62 L50,50 Z" fill="#0d7377"/><path d="M88,62 L78,78 L50,50 Z" fill="#5eb5a8"/><path d="M78,78 L62,88 L50,65 L50,50 Z" fill="#0d7377"/><path d="M62,88 L50,95 L50,65 Z" fill="#5eb5a8"/><path d="M50,95 L38,88 L50,65 Z" fill="#0d7377"/><path d="M38,88 L22,78 L50,50 Z" fill="#5eb5a8"/><path d="M22,78 L12,62 L50,50 Z" fill="#0d7377"/><path d="M12,62 L5,50 L50,50 Z" fill="#5eb5a8"/><path d="M5,50 L12,38 L50,50 L50,35 Z" fill="#5eb5a8"/><path d="M12,38 L22,22 L50,35 Z" fill="#0d7377"/><path d="M22,22 L38,12 L50,35 Z" fill="#5eb5a8"/><circle cx="50" cy="50" r="18" fill="white"/><circle cx="50" cy="45" r="7" fill="#0d7377"/><path d="M45,48 L55,48 L53,62 Q53,65 50,65 Q47,65 47,62 Z" fill="#0d7377"/></svg>
+            OPENCIVIC
+          </div>
+          <div class="mini-content">
+            <div class="mini-stat"><div><div class="n">128</div><div class="l">Signalements ce mois</div></div></div>
+            <div class="mini-stat"><div><div class="n">1 847</div><div class="l">Dossiers résolus</div></div></div>
+            <div class="mini-stat"><div><div class="n">6,2 j</div><div class="l">Délai moyen</div></div></div>
+            <div class="mini-btn"> Faire un signalement</div>
+            <div class="mini-wa">💬 Via WhatsApp</div>
+            <div class="mini-btn" style="background:#28a745;">💡 Proposer une idée</div>
+          </div>
+        </div>
+      </div>
+      <div class="mobile-features">
+        <h4>✨ Fonctionnalités</h4>
+        <ul>
+          <li>Signalements avec photo et géolocalisation GPS</li>
+          <li>Suivi en temps réel de vos dossiers</li>
+          <li>Proposition d'initiatives locales</li>
+          <li>Vote au Budget Participatif</li>
+          <li>Notifications push à chaque étape</li>
+          <li>Accès WhatsApp intégré</li>
+          <li>Informations État Civil complètes</li>
+          <li>Mode hors-ligne pour zones sans réseau</li>
+          <li>Disponible en français, ewe et mina</li>
+          <li>Interface accessible et intuitive</li>
+        </ul>
+        <div class="store-badges">
+          <div class="store-badge"> Google Play</div>
+          <div class="store-badge">🍎 App Store</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="info-mairie">
+  <div class="section-title"><h2>📢 Restez informés</h2><p>Actualités, décisions et événements de la mairie.</p></div>
+  <div class="info-tabs">
+    <div class="tab active" data-filter="all">Tous</div>
+    <div class="tab" data-filter="actualites">📰 Actualités</div>
+    <div class="tab" data-filter="communiques">📋 Communiqués</div>
+    <div class="tab" data-filter="evenements">📅 Événements</div>
+    <div class="tab" data-filter="decisions">⚖️ Décisions</div>
+  </div>
+  <div class="info-list" id="infoList"></div>
+</section>
+
+<section id="tableau">
+  <div class="section-title"><h2>Transparence du traitement</h2><p>Consultez l'état d'avancement des dossiers publics.</p></div>
+  <div class="info-tabs" id="suivi">
+    <div class="tab active">Tous</div>
+    <div class="tab">📥 Reçus</div>
+    <div class="tab">⚙️ En cours</div>
+    <div class="tab">✅ Résolus</div>
+  </div>
+  <div class="transparence-grid">
+    <div class="transparence-card">
+      <h4>Dossiers récents</h4>
+      <div class="dossier resolu"><strong>OC-2026-0184 ✅ Résolu</strong><span>Réparation éclairage — Condji Habitat · Il y a 3 jours</span></div>
+      <div class="dossier encours"><strong>OC-2026-0185 ⚙️ En cours</strong><span>Dépôt sauvage — Djamadji-Ela · Il y a 1 jour</span></div>
+      <div class="dossier reçu"><strong>OC-2026-0186 📥 Reçu</strong><span>Nid-de-poule — Kpota 1 · Aujourd'hui</span></div>
+      <div class="dossier resolu"><strong>OC-2026-0183 ✅ Résolu</strong><span>Fuite d'eau — Zongo · Il y a 5 jours</span></div>
+      <div class="dossier encours"><strong>OC-2026-0187 ⚙️ En cours</strong><span>Arbre tombé — Amadoté · Il y a 2 jours</span></div>
+    </div>
+    <div class="transparence-card">
+      <h4>Reddition de comptes</h4>
+      <div class="indicator"><span><strong>Total signalements 2026</strong></span><span class="value">1 284 <span class="change">▲ +14%</span></span></div>
+      <div class="indicator"><span><strong>Dossiers résolus</strong></span><span class="value">1 847 <span class="change">▲ +9%</span></span></div>
+      <div class="indicator"><span><strong>Délai moyen (jours)</strong></span><span class="value">6,2 <span class="change">▼ −1,8 j</span></span></div>
+      <div class="indicator"><span><strong>Satisfaction</strong></span><span class="value">91% <span class="change">▲ +3 pts</span></span></div>
+    </div>
+    <div class="transparence-card">
+      <h4>Par catégorie</h4>
+      <div class="bar-chart">
+        <div class="bar-item"><div class="bar-label"><span>🛣️ Voirie</span><span>34%</span></div><div class="bar"><div class="bar-fill" style="width:34%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>🗑️ Propreté</span><span>22%</span></div><div class="bar"><div class="bar-fill" style="width:22%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>💡 Éclairage</span><span>15%</span></div><div class="bar"><div class="bar-fill" style="width:15%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>🌳 Environnement</span><span>12%</span></div><div class="bar"><div class="bar-fill" style="width:12%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>🛡️ Sécurité</span><span>9%</span></div><div class="bar"><div class="bar-fill" style="width:9%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>💬 Autres</span><span>8%</span></div><div class="bar"><div class="bar-fill" style="width:8%"></div></div></div>
+      </div>
+    </div>
+    <div class="transparence-card">
+      <h4>Par quartier</h4>
+      <div class="bar-chart">
+        <div class="bar-item"><div class="bar-label"><span>Condji Habitat</span><span>18%</span></div><div class="bar"><div class="bar-fill" style="width:18%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Djamadji-Ela</span><span>16%</span></div><div class="bar"><div class="bar-fill" style="width:16%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Kpota 1</span><span>14%</span></div><div class="bar"><div class="bar-fill" style="width:14%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Zongo</span><span>12%</span></div><div class="bar"><div class="bar-fill" style="width:12%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Amadoté</span><span>10%</span></div><div class="bar"><div class="bar-fill" style="width:10%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Autres</span><span>30%</span></div><div class="bar"><div class="bar-fill" style="width:30%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-title"><h2>Questions fréquentes</h2><p>Tout savoir sur vos démarches</p></div>
+  <div id="faqList">
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Quel est le rôle du BDC ? <span>▼</span></div><div class="faq-a"><p>Le BDC est un service de médiation et d'orientation entre les citoyens et la Mairie. Il ne délivre pas directement les actes administratifs mais vous oriente vers les services compétents et facilite vos démarches.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Qui peut faire un signalement ? <span>▼</span></div><div class="faq-a"><p>Toute personne peut signaler une préoccupation touchant l'espace public. Le BDC enregistre et transmet au service technique compétent.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Puis-je signaler anonymement ? <span>▼</span></div><div class="faq-a"><p>Oui. Cochez la case "rester anonyme" dans le formulaire.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Délais de traitement ? <span>▼</span></div><div class="faq-a"><p>Accusé sous 48h ouvrées. Délai moyen de résolution : 6,2 jours.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Le BDC délivre-t-il les actes d'état civil ? <span>▼</span></div><div class="faq-a"><p>Non. Les actes d'état civil sont délivrés par le service État Civil de la Mairie. Le BDC vous oriente vers ce service et peut vous aider à préparer votre dossier.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Comment obtenir une autorisation de bâtir ? <span>▼</span></div><div class="faq-a"><p>L'autorisation de bâtir est délivrée par le service Urbanisme de la Mairie. Le BDC vous oriente et peut suivre votre dossier. Délai : 30 jours.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Comment utiliser WhatsApp ? <span>▼</span></div><div class="faq-a"><p>Ajoutez le +228 93 91 00 90, envoyez "Bonjour" et suivez les instructions. Le BDC vous orientera vers le bon service.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">WhatsApp sans smartphone ? <span>▼</span></div><div class="faq-a"><p>Oui, via KaiOS. Sinon, utilisez le code USSD *123#.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Comment voter au Budget Participatif ? <span>▼</span></div><div class="faq-a"><p>Rendez-vous dans la rubrique "Budget participatif", consultez les 12 projets détaillés et votez pour vos 3 projets préférés. Vous pouvez voter en ligne, à la mairie ou via WhatsApp.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Combien de projets seront retenus ? <span>▼</span></div><div class="faq-a"><p>Les projets les plus votés seront retenus dans la limite du budget disponible de 45 millions FCFA. L'annonce des résultats aura lieu le 15 septembre 2026.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Je ne sais pas ecrire, puis-je faire un signalement ? <span>▼</span></div><div class="faq-a"><p><strong>Oui !</strong> Dans la rubrique "Signaler", choisissez <strong>Option B — Message vocal</strong>. Appuyez sur le micro, parlez pendant maximum 2 minutes, et le BDC ecoutera votre message pour le traiter. Aucune ecriture necessaire. Vous pouvez aussi passer par WhatsApp ou appeler la ligne citoyenne au +228 93 91 00 90.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Comment fonctionne l'Option B (message vocal) ? <span>▼</span></div><div class="faq-a"><p>1. Allez dans "Signaler" et cliquez sur <strong>Option B</strong>.<br>2. Choisissez le type de probleme et le quartier.<br>3. Cliquez sur le bouton 🎙️ rouge et autorisez le micro.<br>4. Parlez clairement en decrivant le probleme (quartier, rue, details).<br>5. Appuyez sur ⏹️ pour arreter. Vous pouvez reecouter avant d'envoyer.<br>6. Le BDC ecoutera le message et le transcrira pour le traitement.</p></div></div>
+  </div>
+</section>
+
+<div class="cta">
+  <h2>Ensemble, construisons une ville à votre écoute</h2>
+  <p>Chaque signalement compte. La mairie s'engage à traiter toutes les préoccupations avec sérieux et transparence.</p>
+  <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <a href="#signaler" class="btn btn-primary">📣 Faire un signalement (ecrit ou vocal)</a>
+    <a href="https://wa.me/22893910090" class="btn btn-whatsapp" target="_blank">💬 Via WhatsApp</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-col">
+      <h3>
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50,5 L62,12 L50,35 L38,12 Z" fill="#0d7377"/><path d="M62,12 L78,22 L50,35 Z" fill="#5eb5a8"/><path d="M78,22 L88,38 L50,35 Z" fill="#0d7377"/><path d="M88,38 L95,50 L50,50 L50,35 Z" fill="#5eb5a8"/><path d="M95,50 L88,62 L50,50 Z" fill="#0d7377"/><path d="M88,62 L78,78 L50,50 Z" fill="#5eb5a8"/><path d="M78,78 L62,88 L50,65 L50,50 Z" fill="#0d7377"/><path d="M62,88 L50,95 L50,65 Z" fill="#5eb5a8"/><path d="M50,95 L38,88 L50,65 Z" fill="#0d7377"/><path d="M38,88 L22,78 L50,50 Z" fill="#5eb5a8"/><path d="M22,78 L12,62 L50,50 Z" fill="#0d7377"/><path d="M12,62 L5,50 L50,50 Z" fill="#5eb5a8"/><path d="M5,50 L12,38 L50,50 L50,35 Z" fill="#5eb5a8"/><path d="M12,38 L22,22 L50,35 Z" fill="#0d7377"/><path d="M22,22 L38,12 L50,35 Z" fill="#5eb5a8"/><circle cx="50" cy="50" r="18" fill="white"/><circle cx="50" cy="45" r="7" fill="#0d7377"/><path d="M45,48 L55,48 L53,62 Q53,65 50,65 Q47,65 47,62 Z" fill="#0d7377"/></svg>
+        OPENCIVIC
+      </h3>
+      <p>Espace Vie Citoyenne de la Commune des Lacs 1 — plateforme de gouvernance participative. Un service du Bureau du Citoyen (BDC), médiateur entre citoyens et Mairie.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Plateforme</h3>
+      <ul>
+        <li><a href="#signaler">Signaler</a></li>
+        <li><a href="#initiative">Initiatives</a></li>
+        <li><a href="#budget">Budget</a></li>
+        <li><a href="#whatsapp">📱 WhatsApp</a></li>
+        <li><a href="#mobile">📲 App mobile</a></li>
+        <li><a href="#tableau">Transparence</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Bureau du Citoyen</h3>
+      <p>📍 Situé à la maison de la femme, Route N°2, en face d'Ecobank, carrefour 13 janvier<br>Commune des Lacs 1 — Togo</p>
+      <p>☎ +228 93 91 00 90</p>
+      <p>✉ <a href="mailto:bdc@lacs1.mairie.tg">bdc@lacs1.mairie.tg</a></p>
+      <p>📱 <a href="https://wa.me/22893910090" style="color:#25D366;">WhatsApp BDC</a></p>
+    </div>
+    <div class="footer-col">
+      <h3>Informations légales</h3>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Confidentialité</a></li>
+        <li><a href="#">Accessibilité</a></li>
+        <li><a href="#">Médiateur municipal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Mairie de la Commune des Lacs 1 — OPENCIVIC · Prototype 🇹🇬</div>
+</footer>
+
+<button class="chat-toggle" onclick="toggleChat()">💬</button>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div><h4>🤖 Assistant BDC</h4><div class="status">En ligne · Médiateur citoyen</div></div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><div class="chat-bubble"> Bonjour ! Je suis l'assistant du <strong>Bureau du Citoyen (BDC)</strong> de la Commune des Lacs 1.<br><br><strong>Mon rôle :</strong> je suis votre <strong>médiateur et orienteur</strong> entre vous et les services de la Mairie.<br><br>🏛️ Rôle du BDC<br>📄 État Civil (service Mairie)<br>🏗️ Autorisations (service Mairie)<br>📣 Signalements<br>💡 Initiatives<br>🗳️ Budget<br> Contacts<br><br>Comment puis-je vous aider ?</div></div>
+  </div>
+  <div class="chat-quick">
+    <button class="quick-btn" onclick="sendQuick('Rôle du BDC')">🏛️ Rôle BDC</button>
+    <button class="quick-btn" onclick="sendQuick('État civil')"> État civil</button>
+    <button class="quick-btn" onclick="sendQuick('Autorisations')">️ Autorisations</button>
+    <button class="quick-btn" onclick="sendQuick('Signaler')">📣 Signaler</button>
+    <button class="quick-btn" onclick="sendQuick('Budget')">🗳️ Budget</button>
+    <button class="quick-btn" onclick="sendQuick('Contact')">☎ Contact</button>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Votre message..." onkeypress="if(event.key==='Enter')sendMessage()">
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <h3>🔐 Tableau de Bord Administrateur</h3>
+      <button class="chat-close" onclick="toggleAdmin()">✕</button>
+    </div>
+    <div class="admin-tabs">
+      <div class="admin-tab active" onclick="switchAdminTab(0)">📋 Signalements</div>
+      <div class="admin-tab" onclick="switchAdminTab(1)">💡 Initiatives</div>
+      <div class="admin-tab" onclick="switchAdminTab(2)">🗳️ Budget</div>
+      <div class="admin-tab" onclick="switchAdminTab(3)">📰 Infos</div>
+    </div>
+    <div class="admin-body" id="adminBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="projectModal">
+  <div class="modal-content">
+    <div class="modal-header"><h3>📋 Détails du projet</h3><button class="modal-close" onclick="closeModal('projectModal')">✕</button></div>
+    <div class="modal-body" id="projectModalBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="modalView"><div class="modal-content"><div class="modal-header"><h3>Détails</h3><button class="modal-close" onclick="closeModal('modalView')">✕</button></div><div class="modal-body" id="viewContent"></div></div></div>
+<div class="modal" id="modalEdit"><div class="modal-content"><div class="modal-header"><h3>Modifier</h3><button class="modal-close" onclick="closeModal('modalEdit')">✕</button></div><div class="modal-body"><div class="form-group"><label>Statut</label><select id="editStatus"><option>📥 Reçu</option><option>⚙️ En cours</option><option>✅ Résolu</option></select></div><div class="form-group"><label>Priorité</label><select id="editPriority"><option> Basse</option><option>🟡 Moyenne</option><option>🔴 Haute</option></select></div></div><div class="modal-footer"><button class="action-btn btn-view" onclick="closeModal('modalEdit')">Annuler</button><button class="action-btn btn-edit" onclick="saveEdit()">💾 Enregistrer</button></div></div></div>
+<div class="modal" id="modalEditInit"><div class="modal-content"><div class="modal-header" style="background:#28a745;"><h3>Gérer l'initiative</h3><button class="modal-close" onclick="closeModal('modalEditInit')">✕</button></div><div class="modal-body"><div class="form-group"><label>Statut</label><select id="editInitStatus"><option value="proposee">💭 Proposée</option><option value="en-etude"> En étude</option><option value="validee">✅ Validée</option><option value="rejetee">❌ Non retenue</option></select></div><div class="form-group"><label>Avis BDC</label><textarea id="editInitAvis"></textarea></div></div><div class="modal-footer"><button class="action-btn btn-view" onclick="closeModal('modalEditInit')">Annuler</button><button class="action-btn btn-edit" onclick="saveEditInit()">💾 Enregistrer</button></div></div></div>
+<div class="modal" id="modalDelete"><div class="modal-content"><div class="modal-header" style="background:#dc3545;"><h3>⚠️ Supprimer ?</h3><button class="modal-close" onclick="closeModal('modalDelete')">✕</button></div><div class="modal-body"><p>Confirmer la suppression ?</p></div><div class="modal-footer"><button class="action-btn btn-view" onclick="closeModal('modalDelete')">Annuler</button><button class="action-btn btn-del" onclick="confirmDelete()">🗑️ Supprimer</button></div></div></div>
+<div class="modal success-modal" id="modalSuccess"><div class="modal-content"><div class="modal-body"><div class="success-icon">✅</div><h3 style="color:#28a745;">Signalement transmis !</h3><div class="dossier-number" id="successDossier">OC-2026-0000</div><p style="color:#666; font-size:13px;">Le BDC transmettra votre demande au service compétent de la Mairie sous 48h. Si vous avez envoye un message vocal, il sera ecoute et transcrit par l'equipe du BDC.</p><button class="submit-btn" onclick="closeModal('modalSuccess'); backToOptions();">✓ OK</button></div></div></div>
+<div class="modal success-modal" id="modalSuccessInit"><div class="modal-content"><div class="modal-body"><div class="success-icon">💡</div><h3 style="color:#28a745;">Initiative enregistrée !</h3><div class="dossier-number" id="successInitId" style="background:#d4edda; color:#155724;">IL-2026-0000</div><p style="color:#666; font-size:13px;">Le BDC transmettra votre projet aux services municipaux pour étude.</p><button class="submit-btn" style="background:#28a745;" onclick="closeModal('modalSuccessInit')">✓ OK</button></div></div></div>
+
+<script>
+const projets = [
+  { id: 'BP-001', titre: 'Rénovation de la place publique de Kpota', icone: '🏛️', categorie: '🏪 Commerce / Aménagement', quartier: 'Kpota 1', cout: 8500000, votes: 342, description: 'Réhabilitation complète de la place du marché avec pavage, éclairage LED et bancs publics', details: 'Ce projet vise à transformer la place publique de Kpota 1 en un espace moderne et accueillant. Les travaux incluent le pavage intégral, l\'installation de 20 lampadaires LED, la pose de 15 bancs publics, la création d\'espaces verts et l\'aménagement d\'aires de stationnement.', duree: '6 mois', beneficiaires: '5 000 habitants et 200 commerçants' },
+  { id: 'BP-002', titre: 'Construction d\'une crèche municipale', icone: '👶', categorie: ' Éducation / Petite enfance', quartier: 'Djamadji-Ela', cout: 12000000, votes: 289, description: 'Crèche moderne de 100 places pour enfants de 0 à 3 ans avec aire de jeux', details: 'Construction d\'une crèche municipale pouvant accueillir 100 enfants de 0 à 3 ans. Le bâtiment comprendra 4 salles de classe, une salle de sieste, une cuisine, une infirmerie, une aire de jeux extérieure sécurisée et un espace d\'accueil pour les parents.', duree: '12 mois', beneficiaires: '100 enfants et leurs familles' },
+  { id: 'BP-003', titre: 'Éclairage solaire des rues principales', icone: '☀️', categorie: '💡 Éclairage / Environnement', quartier: 'Toute la commune', cout: 6200000, votes: 415, description: 'Installation de 50 lampadaires solaires dans les quartiers non éclairés', details: 'Installation de 50 lampadaires solaires autonomes dans les rues principales des quartiers actuellement non éclairés. Chaque lampadaire est équipé de panneaux photovoltaïques, batteries lithium et LED haute puissance. Autonomie de 3 nuits sans soleil.', duree: '4 mois', beneficiaires: '15 000 habitants' },
+  { id: 'BP-004', titre: 'Aire de jeux pour enfants', icone: '🎠', categorie: '🎮 Loisirs / Jeunesse', quartier: 'Condji Habitat', cout: 4800000, votes: 267, description: 'Parc de jeux sécurisé avec toboggans, balançoires et structures gonflables', details: 'Création d\'un parc de jeux moderne et sécurisé pour enfants de 2 à 12 ans. Équipements : 3 toboggans, 4 balançoires, 2 structures gonflables, 1 tourniquet, sol amortissant en caoutchouc, clôture de sécurité, bancs pour parents et éclairage.', duree: '3 mois', beneficiaires: '2 000 enfants du quartier' },
+  { id: 'BP-005', titre: 'Bitumage de la rue principale d\'Amadoté', icone: '🛣️', categorie: '🛣️ Voirie / Infrastructures', quartier: 'Amadoté', cout: 9500000, votes: 378, description: 'Bitumage de 1,5 km de voirie avec caniveaux et trottoirs', details: 'Bitumage de 1,5 km de la rue principale d\'Amadoté avec construction de caniveaux bétonnés des deux côtés, trottoirs piétonniers, marquage au sol et installation de 10 lampadaires. Ce projet améliorera la circulation et réduira les inondations.', duree: '5 mois', beneficiaires: '8 000 habitants' },
+  { id: 'BP-006', titre: 'Jardin communautaire de Zongo', icone: '🌱', categorie: ' Environnement / Agriculture urbaine', quartier: 'Zongo', cout: 3200000, votes: 198, description: 'Création d\'un jardin potager collectif avec système d\'irrigation goutte-à-goutte', details: 'Aménagement d\'un jardin communautaire de 2 000 m² avec 50 parcelles individuelles, système d\'irrigation goutte-à-goutte alimenté par un forage solaire, hangar de stockage, composteur collectif et espace de formation.', duree: '4 mois', beneficiaires: '50 familles' },
+  { id: 'BP-007', titre: 'Centre de santé de quartier à Nlessi', icone: '🏥', categorie: ' Santé / Social', quartier: 'Nlessi', cout: 15000000, votes: 456, description: 'Construction d\'un dispensaire avec 3 salles de consultation et pharmacie', details: 'Construction d\'un centre de santé primaire équipé de 3 salles de consultation (médecine générale, pédiatrie, planning familial), une pharmacie, une salle d\'accouchement, un laboratoire d\'analyses de base et une ambulance.', duree: '10 mois', beneficiaires: '12 000 habitants' },
+  { id: 'BP-008', titre: 'Terrain de sport omnisports', icone: '', categorie: '⚽ Sport / Jeunesse', quartier: 'Kpota 2', cout: 7500000, votes: 312, description: 'Terrain de football/basketball avec gradins et éclairage', details: 'Construction d\'un terrain omnisports gazonné (football et basketball) avec gradins de 500 places, vestiaires, douches, éclairage LED pour matchs nocturnes, clôture et parking. Organisation de tournois inter-quartiers.', duree: '6 mois', beneficiaires: '3 000 jeunes' },
+  { id: 'BP-009', titre: 'Centre de tri et recyclage des déchets', icone: '️', categorie: '🗑️ Environnement / Propreté', quartier: 'Toute la commune', cout: 5800000, votes: 234, description: 'Centre de collecte et tri sélectif avec sensibilisation au recyclage', details: 'Construction d\'un centre de tri des déchets avec 3 zones (organique, plastique/métal, verre/papier), 5 camions-bennes, 50 bacs de tri réparties dans la commune, programme de sensibilisation dans les écoles et création de 20 emplois verts.', duree: '8 mois', beneficiaires: 'Toute la commune (45 000 habitants)' },
+  { id: 'BP-010', titre: 'Bibliothèque municipale numérique', icone: '📚', categorie: ' Éducation / Culture', quartier: 'Centre-ville (Hôtel de Ville)', cout: 4200000, votes: 276, description: 'Bibliothèque avec 20 ordinateurs, accès internet gratuit et espace lecture', details: 'Aménagement d\'une bibliothèque moderne avec 20 ordinateurs connectés, accès Wi-Fi gratuit, espace lecture de 100 places, 5 000 ouvrages (littérature, sciences, droit), espace multimédia pour les jeunes et salle de formation.', duree: '5 mois', beneficiaires: 'Tous les citoyens' },
+  { id: 'BP-011', titre: 'Forages d\'eau potable', icone: '🚰', categorie: '🚰 Eau / Santé publique', quartier: 'Jéricho, Messan, Avémé', cout: 6800000, votes: 389, description: 'Installation de 3 forages équipés de pompes solaires dans les quartiers défavorisés', details: 'Forage de 3 puits profonds (80-100m) équipés de pompes solaires avec châteaux d\'eau de 10 000 litres chacun, bornes-fontaines publiques (6 par forage), système de traitement de l\'eau et formation de comités de gestion locaux.', duree: '6 mois', beneficiaires: '10 000 habitants' },
+  { id: 'BP-012', titre: 'Sécurisation des écoles (clôtures)', icone: '🛡️', categorie: '🛡️ Sécurité / Éducation', quartier: 'Plusieurs quartiers', cout: 3900000, votes: 291, description: 'Clôture et portails sécurisés pour 5 écoles primaires de la commune', details: 'Clôture complète de 5 écoles primaires avec murs de 2,5m de hauteur, portails métalliques sécurisés, gardiennage, éclairage extérieur et installation de caméras de surveillance. Protection des élèves contre les intrusions.', duree: '4 mois', beneficiaires: '2 500 élèves' }
+];
+
+let myVotes = new Set();
+const MAX_VOTES = 3;
+const BUDGET_TOTAL = 45000000;
+
+const appData = {
+  signalements: [
+    { id: 'OC-2026-0180', date: '10/08/2026', cat: '🛣️ Voirie', obj: 'Nid-de-poule', quartier: 'Kpota 1', statut: '✅ Résolu', prio: ' Moyenne', delai: 4, source: 'web' },
+    { id: 'OC-2026-0181', date: '12/08/2026', cat: '💡 Éclairage', obj: 'Lampadaire HS', quartier: 'Zongo', statut: '✅ Résolu', prio: ' Basse', delai: 3, source: 'whatsapp' },
+    { id: 'OC-2026-0182', date: '14/08/2026', cat: '🗑️ Propreté', obj: 'Canal bouché', quartier: 'Amadoté', statut: '✅ Résolu', prio: '🟡 Moyenne', delai: 5, source: 'whatsapp' },
+    { id: 'OC-2026-0185', date: '18/08/2026', cat: '️ Propreté', obj: 'Dépôt sauvage', quartier: 'Djamadji-Ela', statut: '⚙️ En cours', prio: '🔴 Haute', delai: 1, source: 'whatsapp' },
+    { id: 'OC-2026-0186', date: '19/08/2026', cat: '🛣️ Voirie', obj: 'Nid-de-poule', quartier: 'Kpota 1', statut: '📥 Reçu', prio: '🟡 Moyenne', delai: 0, source: 'web' }
+  ],
+  initiatives: [
+    { id: 'IL-2026-0001', titre: 'Jardin partagé à Kpota', cat: '🌳 Environnement', quartier: 'Kpota 1', desc: 'Création d\'un jardin partagé.', cout: 2500000, duree: '6 mois', auteur: 'Amenya K.', date: '05/08/2026', statut: 'validee', soutiens: 87, avis: 'Projet recevable.' },
+    { id: 'IL-2026-0002', titre: 'Bibliothèque de rue', cat: '📚 Éducation', quartier: 'Djamadji-Ela', desc: 'Boîte à livres.', cout: 800000, duree: '3 mois', auteur: 'Mensah A.', date: '10/08/2026', statut: 'en-etude', soutiens: 54, avis: 'Étude en cours.' }
+  ],
+  infos: [
+    { id: 'INFO-001', titre: 'Lancement budget participatif 2026', cat: 'actualites', date: '15/06/2026', contenu: 'La commune lance son premier budget participatif.' },
+    { id: 'INFO-002', titre: 'Travaux voirie Kpota', cat: 'communiques', date: '10/06/2026', contenu: 'Travaux du 15 au 30 juin à Kpota 1.' },
+    { id: 'INFO-003', titre: 'Journée environnement', cat: 'evenements', date: '05/06/2026', contenu: 'Nettoyage participatif et plantation d\'arbres.' },
+    { id: 'INFO-004', titre: 'Lancement WhatsApp BDC', cat: 'annonces', date: '01/08/2026', contenu: 'Le BDC est désormais accessible via WhatsApp.' },
+    { id: 'INFO-005', titre: 'Nouveau guichet médiation', cat: 'actualites', date: '15/08/2026', contenu: 'Le BDC renforce son rôle de médiateur.' }
+  ],
+  bdcKnowledge: {
+    contact: { adresse: 'Situé à la maison de la femme, Route N°2, en face d\'Ecobank, carrefour 13 janvier', telephone: '+228 93 91 00 90 / 97 34 66 29', email: 'bdc@lacs1.mairie.tg', horaires: 'Lun – Ven : 8h30 – 17h30 · Sam : 9h – 12h', whatsapp: '+228 93 91 00 90' },
+    roleBDC: { presentation: 'Le Bureau du Citoyen (BDC) est un service de la Mairie qui joue un rôle de médiation et d\'orientation entre vous et les services municipaux compétents.', missions: [{ nom: 'Accueil et orientation', desc: 'Nous vous orientons vers le bon service' }, { nom: 'Médiation', desc: 'Nous facilitons le dialogue citoyen-administration' }, { nom: 'Suivi des dossiers', desc: 'Nous suivons l\'avancement de vos demandes' }, { nom: 'Réception des signalements', desc: 'Nous enregistrons et transmettons' }, { nom: 'Assistance numérique', desc: 'Nous vous aidons avec OPENCIVIC' }, { nom: 'Recours citoyen', desc: 'Nous transmettons vos réclamations' }], precision: '️ Le BDC ne délivre PAS directement les actes d\'état civil ou les autorisations. Ces services sont assurés par les directions techniques de la Mairie.' },
+    etatCivil: { presentation: 'Le service État Civil est un service de la Mairie. Le BDC vous oriente vers ce service.', lieu: 'Guichet État Civil — Hôtel de Ville, RDC (Mairie)', naissance: { titre: '👶 Acte de naissance', service: 'Service État Civil de la Mairie', delai: 'Dans les 30 jours (gratuit)', cout: 'Gratuit (2 000 FCFA après)', pieces: ['Déclaration de naissance', 'Certificat d\'accouchement', 'Pièces d\'identité parents', 'Livret de famille', '2 témoins majeurs'], delaiTraitement: '24 à 48 heures', remarque: 'Le BDC peut vous accompagner dans la préparation.' }, mariage: { titre: '💍 Mariage civil', service: 'Service État Civil', delai: '1 mois avant', cout: '15 000 FCFA', pieces: ['Pièces d\'identité', 'Actes de naissance', 'Certificats de célibat', 'Certificat médical', '4 témoins'], delaiTraitement: '10 jours', remarque: 'Audition obligatoire.' }, deces: { titre: '🕊️ Acte de décès', service: 'Service État Civil', delai: '10 jours', cout: 'Gratuit', pieces: ['Certificat médical', 'Pièce d\'identité défunt', 'Livret de famille'], delaiTraitement: '24 heures', remarque: 'Déclaration par un parent.' }, certificatVie: { titre: '📜 Certificat de vie', service: 'Service État Civil', delai: 'Immédiat', cout: '500 FCFA', pieces: ['Pièce d\'identité', 'Justificatif domicile'], delaiTraitement: '15 minutes', remarque: 'Nécessaire pour pensions.' }, legalisation: { titre: '✅ Légalisation', service: 'Service État Civil', delai: 'Immédiat', cout: '200 FCFA', pieces: ['Document original', 'Pièce d\'identité'], delaiTraitement: '5 minutes', remarque: 'Copie conforme, signature.' } },
+    autorisations: { presentation: 'Les autorisations sont délivrées par les services techniques de la Mairie. Le BDC vous oriente.', autorisationBatir: { titre: '🏗️ Autorisation de bâtir', service: 'Service Urbanisme', description: 'Obligatoire avant toute construction', cout: '25 000 à 150 000 FCFA', pieces: ['Titre foncier', 'Plans', 'Permis de lotir', 'Devis', 'Pièce d\'identité'], delai: '30 jours', validite: '2 ans', remarque: 'Le BDC peut suivre votre dossier.' }, certificatResidence: { titre: ' Certificat de résidence', service: 'Service État Civil', description: 'Atteste de votre domicile', cout: '1 000 FCFA', pieces: ['Pièce d\'identité', 'Justificatif domicile'], delai: '24 heures', validite: '3 mois' }, certificatHebergement: { titre: '🛏️ Certificat d\'hébergement', service: 'Service État Civil', description: 'Atteste l\'hébergement', cout: '500 FCFA', pieces: ['Pièce d\'identité hébergeant', 'Pièce d\'identité hébergé', 'Justificatif domicile'], delai: '24 heures', validite: '3 mois' }, autorisationOccupation: { titre: '🏪 Occupation domaine public', service: 'Affaires Générales', description: 'Pour étals, terrasses', cout: '5 000 à 50 000 FCFA/mois', pieces: ['Demande écrite', 'Plan', 'Pièce d\'identité', 'Registre commerce'], delai: '15 jours', validite: '1 an' }, certificatNonGage: { titre: '📋 Certificat de non-gage', service: 'Service État Civil', description: 'Bien non grevé', cout: '2 000 FCFA', pieces: ['Pièce d\'identité', 'Référence du bien'], delai: '48 heures', validite: '3 mois' }, autorisationManifestation: { titre: '📢 Manifestation publique', service: 'Affaires Générales', description: 'Réunions, défilés', cout: 'Gratuit', pieces: ['Demande 15 jours avant', 'Programme', 'Plan', 'Sécurité', 'Pièce d\'identité'], delai: '10 jours', validite: 'Date demandée' } },
+    quartiers: ['Djamadji-Ela', 'Nlessi', 'Zongo', 'Amadoté', 'Kpota 1', 'Kpota 2', 'Condji Habitat', 'Messan', 'Jéricho', 'Avémé', 'Landjo']
+  }
+};
+
+function computeStats() {
+  const total = appData.signalements.length;
+  const resolus = appData.signalements.filter(s => s.statut.includes('Résolu')).length;
+  const enCours = appData.signalements.filter(s => s.statut.includes('cours')).length;
+  const recus = appData.signalements.filter(s => s.statut.includes('Reçu')).length;
+  const resolusAvecDelai = appData.signalements.filter(s => s.statut.includes('Résolu') && s.delai > 0);
+  const delaiMoyen = resolusAvecDelai.length > 0 ? (resolusAvecDelai.reduce((s, x) => s + x.delai, 0) / resolusAvecDelai.length).toFixed(1) : 0;
+  const ceMois = appData.signalements.filter(s => s.date.includes('/08/2026')).length;
+  const tauxResolution = total > 0 ? Math.round((resolus / total) * 100) : 0;
+  const satisfaction = Math.min(98, 85 + Math.floor(tauxResolution / 10));
+  const totalVotes = projets.reduce((s, p) => s + p.votes, 0);
+  const initTotal = appData.initiatives.length;
+  const initValidees = appData.initiatives.filter(i => i.statut === 'validee').length;
+  const initSoutiens = appData.initiatives.reduce((s, i) => s + i.soutiens, 0);
+  const signalementsWA = appData.signalements.filter(s => s.source === 'whatsapp').length;
+  const pctWA = total > 0 ? Math.round((signalementsWA / total) * 100) : 0;
+  return { total, resolus, enCours, recus, delaiMoyen, ceMois, satisfaction, tauxResolution, totalVotes, initTotal, initValidees, initSoutiens, signalementsWA, pctWA };
+}
+
+function renderProjects() {
+  const grid = document.getElementById('projectsGrid');
+  const sorted = [...projets].sort((a, b) => b.votes - a.votes);
+  grid.innerHTML = sorted.map(p => {
+    const isVoted = myVotes.has(p.id);
+    const coutFmt = (p.cout / 1000000).toFixed(1) + ' M FCFA';
+    return `<div class="project-card ${isVoted ? 'voted' : ''}" onclick="openProjectDetail('${p.id}')">
+      <div class="project-header"><div class="project-icon">${p.icone}</div><div class="project-title">${p.titre}</div></div>
+      <div class="project-badges"><span class="badge-cat">${p.categorie}</span><span class="badge-quartier">📍 ${p.quartier}</span></div>
+      <div class="project-desc">${p.description}</div>
+      <div class="project-meta"><span>💰 ${coutFmt}</span><span>⏱️ ${p.duree}</span><span>👥 ${p.beneficiaires}</span></div>
+      <div class="project-footer"><div class="vote-count">️ ${p.votes} votes</div><button class="btn-vote ${isVoted ? 'voted' : ''}" onclick="event.stopPropagation(); toggleVote('${p.id}')">${isVoted ? '✓ Voté' : 'Voter'}</button></div>
+    </div>`;
+  }).join('');
+  updateBudgetProgress();
+  updateMyVotesDisplay();
+}
+
+function toggleVote(id) {
+  if (myVotes.has(id)) { myVotes.delete(id); } 
+  else {
+    if (myVotes.size >= MAX_VOTES) { alert(`⚠️ Vous avez déjà utilisé vos ${MAX_VOTES} votes !`); return; }
+    myVotes.add(id);
+  }
+  
+// ===== GESTION OPTION A / OPTION B =====
+function selectOption(opt) {
+  document.getElementById('optionChooser').style.display = 'none';
+  document.getElementById('panelA').classList.remove('active');
+  document.getElementById('panelB').classList.remove('active');
+  if (opt === 'A') {
+    document.getElementById('panelA').classList.add('active');
+    document.getElementById('optA').classList.add('selected');
+    document.getElementById('optB').classList.remove('selected');
+  } else {
+    document.getElementById('panelB').classList.add('active');
+    document.getElementById('optB').classList.add('selected');
+    document.getElementById('optA').classList.remove('selected');
+  }
+}
+
+function backToOptions() {
+  document.getElementById('optionChooser').style.display = 'grid';
+  document.getElementById('panelA').classList.remove('active');
+  document.getElementById('panelB').classList.remove('active');
+  document.getElementById('optA').classList.remove('selected');
+  document.getElementById('optB').classList.remove('selected');
+}
+
+// ===== ENREGISTREMENT AUDIO =====
+let mediaRecorder = null;
+let audioChunks = [];
+let audioBlob = null;
+let audioUrl = null;
+let recStartTime = null;
+let recTimerInterval = null;
+let isRecording = false;
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      audioUrl = URL.createObjectURL(audioBlob);
+      document.getElementById('audioPlayback').src = audioUrl;
+      document.getElementById('audioPlayback').style.display = 'block';
+      document.getElementById('audioBlob').value = audioUrl;
+      document.getElementById('audioRecorder').classList.add('has-audio');
+      document.getElementById('recStatus').textContent = "✅ Enregistrement terminé — vous pouvez l'ecouter ou le supprimer";
+      clearInterval(recTimerInterval);
+      isRecording = false;
+      updateRecButtons();
+      document.getElementById('vocalSubmit').disabled = false;
+      stream.getTracks().forEach(t => t.stop());
+    };
+
+    mediaRecorder.start();
+    isRecording = true;
+    recStartTime = Date.now();
+
+    document.getElementById('audioRecorder').classList.add('recording');
+    document.getElementById('audioWave').classList.add('recording');
+    document.getElementById('recStatus').textContent = '🔴 Enregistrement en cours...';
+    document.getElementById('recStatus').classList.add('recording');
+
+    recTimerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - recStartTime) / 1000);
+      const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+      const secs = String(elapsed % 60).padStart(2, '0');
+      document.getElementById('recTimer').textContent = mins + ':' + secs;
+      if (elapsed >= 120) stopRecording();
+    }, 1000);
+
+    updateRecButtons();
+  } catch (err) {
+    alert("Impossible d'acceder au micro. Verifiez les permissions de votre navigateur.\n\nAlternative : appelez le BDC au +228 93 91 00 90 ou utilisez WhatsApp.");
+    console.error(err);
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    document.getElementById('audioRecorder').classList.remove('recording');
+    document.getElementById('audioWave').classList.remove('recording');
+    document.getElementById('recStatus').classList.remove('recording');
+  }
+}
+
+function playRecording() {
+  const audio = document.getElementById('audioPlayback');
+  if (audio.src) { audio.play(); }
+}
+
+function deleteRecording() {
+  audioBlob = null;
+  audioUrl = null;
+  audioChunks = [];
+  document.getElementById('audioPlayback').src = '';
+  document.getElementById('audioPlayback').style.display = 'none';
+  document.getElementById('audioBlob').value = '';
+  document.getElementById('audioRecorder').classList.remove('has-audio');
+  document.getElementById('recTimer').textContent = '00:00';
+  document.getElementById('recStatus').textContent = "Touchez le micro rouge pour parler";
+  document.getElementById('vocalSubmit').disabled = true;
+  updateRecButtons();
+}
+
+function updateRecButtons() {
+  document.getElementById('btnRecord').disabled = isRecording || audioBlob !== null;
+  document.getElementById('btnStop').disabled = !isRecording;
+  document.getElementById('btnPlay').disabled = audioBlob === null;
+  document.getElementById('btnDel').disabled = audioBlob === null;
+}
+
+renderProjects();
+}
+
+function updateMyVotesDisplay() { document.getElementById('myVotesCount').textContent = myVotes.size; }
+
+function updateBudgetProgress() {
+  const sorted = [...projets].sort((a, b) => b.votes - a.votes);
+  let budgetUsed = 0, selectedCount = 0;
+  for (const p of sorted) { if (budgetUsed + p.cout <= BUDGET_TOTAL) { budgetUsed += p.cout; selectedCount++; } }
+  const pct = Math.round((budgetUsed / BUDGET_TOTAL) * 100);
+  document.getElementById('budgetProgressFill').style.width = pct + '%';
+  document.getElementById('budgetProgressFill').textContent = pct + '%';
+  document.getElementById('budgetUsed').textContent = budgetUsed.toLocaleString('fr-FR') + ' FCFA engagés (' + selectedCount + ' projets)';
+  document.getElementById('budgetRemaining').textContent = (BUDGET_TOTAL - budgetUsed).toLocaleString('fr-FR') + ' FCFA restants';
+  const totalVotes = projets.reduce((s, p) => s + p.votes, 0);
+  document.getElementById('totalVotesDisplay').textContent = totalVotes.toLocaleString('fr-FR');
+}
+
+function openProjectDetail(id) {
+  const p = projets.find(x => x.id === id);
+  if (!p) return;
+  const isVoted = myVotes.has(p.id);
+  const coutFmt = p.cout.toLocaleString('fr-FR') + ' FCFA';
+  const rank = [...projets].sort((a,b) => b.votes - a.votes).findIndex(x => x.id === p.id) + 1;
+  document.getElementById('projectModalBody').innerHTML = `
+    <div class="project-detail-header"><div class="project-detail-icon">${p.icone}</div><div><div class="project-detail-title">${p.titre}</div><div class="project-detail-id"> ${p.id} · ${p.categorie}</div></div></div>
+    <div class="detail-grid">
+      <div class="detail-item"><div class="lbl">💰 Coût estimé</div><div class="val">${coutFmt}</div></div>
+      <div class="detail-item"><div class="lbl">📍 Quartier</div><div class="val">${p.quartier}</div></div>
+      <div class="detail-item"><div class="lbl">⏱️ Durée</div><div class="val">${p.duree}</div></div>
+      <div class="detail-item"><div class="lbl">👥 Bénéficiaires</div><div class="val">${p.beneficiaires}</div></div>
+    </div>
+    <div class="detail-section"><h4>📝 Description du projet</h4><p>${p.details}</p></div>
+    <div class="detail-section"><h4>🗳️ Résultats du vote</h4>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="lbl">Votes actuels</div><div class="val" style="color:#0f766e;">${p.votes} votes</div></div>
+        <div class="detail-item"><div class="lbl">Classement</div><div class="val">#${rank} / 12</div></div>
+      </div>
+    </div>
+    <div class="vote-section">
+      <div class="current-votes">️ ${p.votes} citoyens ont voté pour ce projet</div>
+      <button class="btn-vote ${isVoted ? 'voted' : ''}" onclick="toggleVote('${p.id}'); openProjectDetail('${p.id}');" ${!isVoted && myVotes.size >= MAX_VOTES ? 'disabled' : ''}>
+        ${isVoted ? '✓ Retirer mon vote' : (myVotes.size >= MAX_VOTES ? '⚠️ Quota atteint (3/3)' : '🗳️ Voter pour ce projet')}
+      </button>
+      <p style="margin-top:8px; font-size:11px; color:#666;">${isVoted ? '✅ Vous avez voté pour ce projet' : `Il vous reste ${MAX_VOTES - myVotes.size} vote(s) disponible(s)`}</p>
+    </div>`;
+  document.getElementById('projectModal').classList.add('open');
+}
+
+function toggleChat() { document.getElementById('chatWindow').classList.toggle('open'); }
+function showTyping() {
+  const m = document.getElementById('chatMessages');
+  const t = document.createElement('div');
+  t.className = 'chat-msg bot'; t.id = 'typingIndicator';
+  t.innerHTML = '<div class="chat-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>';
+  m.appendChild(t); m.scrollTop = m.scrollHeight;
+}
+function removeTyping() { const t = document.getElementById('typingIndicator'); if (t) t.remove(); }
+function addMessage(text, sender) {
+  const m = document.getElementById('chatMessages');
+  const msg = document.createElement('div');
+  msg.className = 'chat-msg ' + sender;
+  msg.innerHTML = '<div class="chat-bubble">' + text.replace(/\n/g, '<br>') + '</div>';
+  m.appendChild(msg); m.scrollTop = m.scrollHeight;
+}
+function sendQuick(text) { addMessage(text, 'user'); showTyping(); setTimeout(() => { removeTyping(); addMessage(getBotResponse(text), 'bot'); }, 800); }
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  addMessage(text, 'user'); input.value = ''; showTyping();
+  setTimeout(() => { removeTyping(); addMessage(getBotResponse(text), 'bot'); }, 900);
+}
+
+function getBotResponse(input) {
+  const t = input.toLowerCase();
+  const kb = appData.bdcKnowledge;
+  const s = computeStats();
+
+  if (/^(bonjour|bonsoir|hello|salut|coucou|hi)/.test(t)) return `Bonjour !  Je suis l'assistant du <strong>Bureau du Citoyen (BDC)</strong> de la Commune des Lacs 1.<br><br><strong>Mon rôle :</strong> je suis votre <strong>médiateur et orienteur</strong> entre vous et les services de la Mairie.<br><br>Je peux vous renseigner sur :<br>️ <strong>Rôle du BDC</strong><br>📄 <strong>État Civil</strong> (service Mairie)<br>️ <strong>Autorisations</strong> (services Mairie)<br>📣 <strong>Signalements</strong><br>💡 <strong>Initiatives</strong><br>🗳️ <strong>Budget participatif</strong><br>📱 <strong>WhatsApp</strong><br>☎ <strong>Contacts</strong><br><br>Comment puis-je vous aider ?`;
+  if (/bdc|bureau.*citoyen|role|médiation|mediation|orientation|guichet/.test(t)) { const r = kb.roleBDC; return `️ <strong>Rôle du Bureau du Citoyen</strong><br><br>${r.presentation}<br><br><strong>Nos missions :</strong><br>${r.missions.map(m => `• <strong>${m.nom}</strong> — ${m.desc}`).join('<br>')}<br><br>${r.precision}<br><br>📍 ${kb.contact.adresse}<br>🕒 ${kb.contact.horaires}<br> ${kb.contact.telephone}`; }
+  if (/état civil|etat civil|acte.*civil|civil/.test(t) && !/naissance|mariage|décès|deces|certificat|légalisation|legalisation/.test(t)) { const ec = kb.etatCivil; return `📄 <strong>Service État Civil de la Mairie</strong><br><br>${ec.presentation}<br><br><strong>Actes disponibles :</strong><br> <strong>Naissance</strong> — Gratuit sous 30 jours<br>💍 <strong>Mariage</strong> — 15 000 FCFA<br>🕊️ <strong>Décès</strong> — Gratuit<br>📜 <strong>Certificat de vie</strong> — 500 FCFA<br>✅ <strong>Légalisation</strong> — 200 FCFA<br><br>📍 <strong>Guichet :</strong> ${ec.lieu}<br><br>💡 <em>Tapez "naissance", "mariage", "décès" ou "certificat" pour plus de détails.</em>`; }
+  if (/naissance|naître|naitre|nouveau.né|nouveau.ne/.test(t)) { const n = kb.etatCivil.naissance; return `${n.titre}<br><br>🏛️ <strong>Service :</strong> ${n.service}<br>⏱️ <strong>Délai :</strong> ${n.delai}<br>💰 <strong>Coût :</strong> ${n.cout}<br>⏳ <strong>Traitement :</strong> ${n.delaiTraitement}<br><br><strong>📄 Pièces :</strong><br>${n.pieces.map(p => `• ${p}`).join('<br>')}<br><br>💡 <em>${n.remarque}</em>`; }
+  if (/mariage|marier|épouser|epouser|noces|union/.test(t)) { const m = kb.etatCivil.mariage; return `${m.titre}<br><br>🏛️ <strong>Service :</strong> ${m.service}<br>️ <strong>Délai :</strong> ${m.delai}<br>💰 <strong>Coût :</strong> ${m.cout}<br> <strong>Traitement :</strong> ${m.delaiTraitement}<br><br><strong> Pièces :</strong><br>${m.pieces.map(p => `• ${p}`).join('<br>')}<br><br>⚠️ <em>${m.remarque}</em>`; }
+  if (/décès|deces|mort|defunt|défunt/.test(t)) { const d = kb.etatCivil.deces; return `${d.titre}<br><br>🏛️ <strong>Service :</strong> ${d.service}<br>⏱️ <strong>Délai :</strong> ${d.delai}<br>💰 <strong>Coût :</strong> ${d.cout}<br>⏳ <strong>Traitement :</strong> ${d.delaiTraitement}<br><br><strong>📄 Pièces :</strong><br>${d.pieces.map(p => `• ${p}`).join('<br>')}<br><br>⚠️ <em>${d.remarque}</em>`; }
+  if (/certificat.*vie|vie.*certificat|pension|retraite/.test(t)) { const c = kb.etatCivil.certificatVie; return `${c.titre}<br><br>🏛️ <strong>Service :</strong> ${c.service}<br>⏱️ <strong>Délai :</strong> ${c.delai}<br>💰 <strong>Coût :</strong> ${c.cout}<br>⏳ <strong>Traitement :</strong> ${c.delaiTraitement}<br><br><strong>📄 Pièces :</strong><br>${c.pieces.map(p => `• ${p}`).join('<br>')}<br><br>⚠️ <em>${c.remarque}</em>`; }
+  if (/legalisation|légalisation|copie.*conforme|certif.*signature|authenti/.test(t)) { const l = kb.etatCivil.legalisation; return `${l.titre}<br><br>🏛️ <strong>Service :</strong> ${l.service}<br>⏱️ <strong>Délai :</strong> ${l.delai}<br>💰 <strong>Coût :</strong> ${l.cout}<br>⏳ <strong>Traitement :</strong> ${l.delaiTraitement}<br><br><strong>📄 Pièces :</strong><br>${l.pieces.map(p => `• ${p}`).join('<br>')}<br><br>⚠️ <em>${l.remarque}</em>`; }
+  if (/autorisation|acte.*admin|permis|bâtir|batir|construc|lotissement|occupation.*domaine|manifestation/.test(t) && !/bâtir|batir|construc|résidence|residence|hébergement|hebergement|occupation.*domaine|manifestation|non.gage|gage/.test(t)) { const a = kb.autorisations; return `🏗️ <strong>Autorisations Administratives (Mairie)</strong><br><br>${a.presentation}<br><br><strong>Actes disponibles :</strong><br>🏗️ <strong>Autorisation de bâtir</strong> — Urbanisme · 25 000 à 150 000 FCFA<br>🏠 <strong>Certificat de résidence</strong> — État Civil · 1 000 FCFA<br>🛏️ <strong>Certificat d'hébergement</strong> — État Civil · 500 FCFA<br>🏪 <strong>Occupation domaine public</strong> — Affaires Générales · 5 000 à 50 000 FCFA<br>📋 <strong>Certificat de non-gage</strong> — État Civil · 2 000 FCFA<br>📢 <strong>Manifestation publique</strong> — Affaires Générales · Gratuit<br><br>💡 <em>Tapez "bâtir", "résidence", "hébergement", "occupation" ou "manifestation" pour plus de détails.</em>`; }
+  if (/bâtir|batir|construc|permis.*construire|extension|renovation|rénovation/.test(t)) { const b = kb.autorisations.autorisationBatir; return `${b.titre}<br><br>🏛️ <strong>Service :</strong> ${b.service}<br>📝 <strong>${b.description}</strong><br><br>💰 <strong>Coût :</strong> ${b.cout}<br>⏳ <strong>Délai :</strong> ${b.delai}<br>📅 <strong>Validité :</strong> ${b.validite}<br><br><strong>📄 Pièces :</strong><br>${b.pieces.map(p => `• ${p}`).join('<br>')}<br><br>💡 <em>${b.remarque}</em>`; }
+  if (/résidence|residence|domicile|attestation.*domicile/.test(t)) { const r = kb.autorisations.certificatResidence; return `${r.titre}<br><br>🏛️ <strong>Service :</strong> ${r.service}<br>📝 <strong>${r.description}</strong><br><br>💰 <strong>Coût :</strong> ${r.cout}<br>⏳ <strong>Délai :</strong> ${r.delai}<br>📅 <strong>Validité :</strong> ${r.validite}<br><br><strong> Pièces :</strong><br>${r.pieces.map(p => `• ${p}`).join('<br>')}`; }
+  if (/hébergement|hebergement|heberge|logé|loge/.test(t)) { const h = kb.autorisations.certificatHebergement; return `${h.titre}<br><br>🏛️ <strong>Service :</strong> ${h.service}<br>📝 <strong>${h.description}</strong><br><br>💰 <strong>Coût :</strong> ${h.cout}<br>⏳ <strong>Délai :</strong> ${h.delai}<br>📅 <strong>Validité :</strong> ${h.validite}<br><br><strong>📄 Pièces :</strong><br>${h.pieces.map(p => `• ${p}`).join('<br>')}`; }
+  if (/occupation.*domaine|étal|etal|terrasse|chantier.*voie|commerce.*rue/.test(t)) { const o = kb.autorisations.autorisationOccupation; return `${o.titre}<br><br>🏛️ <strong>Service :</strong> ${o.service}<br>📝 <strong>${o.description}</strong><br><br>💰 <strong>Coût :</strong> ${o.cout}<br>⏳ <strong>Délai :</strong> ${o.delai}<br>📅 <strong>Validité :</strong> ${o.validite}<br><br><strong>📄 Pièces :</strong><br>${o.pieces.map(p => `• ${p}`).join('<br>')}`; }
+  if (/manifestation|réunion|reunion|défilé|defile|événement.*public|evenement.*public|rassemblement/.test(t)) { const m = kb.autorisations.autorisationManifestation; return `${m.titre}<br><br>🏛️ <strong>Service :</strong> ${m.service}<br>📝 <strong>${m.description}</strong><br><br>💰 <strong>Coût :</strong> ${m.cout}<br>⏳ <strong>Délai :</strong> ${m.delai}<br>📅 <strong>Validité :</strong> ${m.validite}<br><br><strong> Pièces :</strong><br>${m.pieces.map(p => `• ${p}`).join('<br>')}`; }
+  if (/non.gage|gage|nantissement|charge.*bien/.test(t)) { const ng = kb.autorisations.certificatNonGage; return `${ng.titre}<br><br>🏛️ <strong>Service :</strong> ${ng.service}<br>📝 <strong>${ng.description}</strong><br><br>💰 <strong>Coût :</strong> ${ng.cout}<br>⏳ <strong>Délai :</strong> ${ng.delai}<br>📅 <strong>Validité :</strong> ${ng.validite}<br><br><strong>📄 Pièces :</strong><br>${ng.pieces.map(p => `• ${p}`).join('<br>')}`; }
+  if (/signaler|signalement|problème|probleme|nid.de.poule|déchet|dechet|éclairage|eclairage|fuite|bruit/.test(t)) return `📣 <strong>Faire un signalement (via le BDC)</strong><br><br>Le BDC enregistre votre signalement et le transmet au service technique compétent de la Mairie.<br><br>📝 <strong>Option A</strong> : Formulaire ecrit (rubrique "Signaler")<br>🎙️ <strong>Option B</strong> : Message vocal (pour ceux qui ne peuvent pas ecrire)<br>📱 WhatsApp : +228 93 91 00 90<br> Guichet BDC : Hôtel de Ville RDC<br><br>⏱️ Prise en charge sous 48h ouvrées<br> Numéro de dossier immédiat (OC-2026-XXXX)`;
+  if (/initiative|proposer|projet.*développement|projet.*developpement|idée|idee/.test(t)) { const topInit = [...appData.initiatives].sort((a,b) => b.soutiens - a.soutiens).slice(0, 3); return `💡 <strong>Initiative Locale (via le BDC)</strong><br><br>Le BDC enregistre votre proposition et la transmet aux services municipaux.<br><br>📊 ${s.initTotal} initiatives · ${s.initValidees} validées<br>❤️ ${s.initSoutiens} soutiens citoyens<br><br>🏆 Top 3 :<br>${topInit.map(i => `• ${i.titre} (${i.soutiens} ❤️)`).join('<br>')}`; }
+  if (/budget|participatif|vote|voter/.test(t)) { const top3 = [...projets].sort((a,b) => b.votes - a.votes).slice(0,3); return `🗳️ <strong>Budget Participatif 2026</strong><br><br>📅 Vote jusqu'au 31 août<br>💰 45 M FCFA · 12 projets<br>🗳️ ${s.totalVotes.toLocaleString('fr-FR')} votes<br><br>🏆 En tête :<br>${top3.map(p => `• ${p.icone} ${p.titre} (${p.votes})`).join('<br>')}<br><br>Cliquez sur un projet dans la rubrique Budget pour voir les détails.`; }
+  if (/whatsapp|wa|sms|mobile|téléphone|telephone/.test(t)) return `📱 <strong>Accès WhatsApp au BDC</strong><br><br>💬 <strong>Numéro :</strong> +228 93 91 00 90<br>🔗 <a href="https://wa.me/22893910090" target="_blank" style="color:#25D366;">Cliquez ici pour démarrer</a><br><br>✨ Services disponibles :<br>•  Signalements<br>• 🔍 Suivi de dossier<br>• 💡 Initiatives locales<br>• 🗳️ Budget participatif<br>•  Orientation État Civil<br>• 🏛️ Orientation Service à la Population<br><br>📞 Pas de WhatsApp ? Code USSD : <strong>*123#</strong>`;
+  if (/actualité|actualite|info|nouvelle|communiqué|communique|événement|evenement/.test(t)) { const dernieres = appData.infos.slice(-3).reverse(); return `📰 <strong>Dernières actualités</strong><br><br>${dernieres.map(i => `• <strong>${i.titre}</strong> (${i.date})`).join('<br>')}<br><br>Retrouvez tout dans la rubrique "Info Mairie".`; }
+  if (/contact|horaire|heure|ouvert|adresse|où|ou trouver|email|courriel/.test(t)) return `☎ <strong>Bureau du Citoyen (BDC)</strong><br><br> ${kb.contact.adresse}<br>🕒 ${kb.contact.horaires}<br>☎ ${kb.contact.telephone}<br>📱 WhatsApp : ${kb.contact.whatsapp}<br>✉ ${kb.contact.email}<br><br>🚨 Urgences : Police 117 · Pompiers 118<br><br> <em>Le BDC vous oriente vers les services compétents de la Mairie.</em>`;
+  if (/statistique|stats|chiffre|combien|total|bilan/.test(t)) return `📊 <strong>Statistiques du BDC</strong><br><br>📥 Total signalements : <strong>${s.total}</strong><br>✅ Résolus : <strong>${s.resolus}</strong> (${s.tauxResolution}%)<br>⚙️ En cours : <strong>${s.enCours}</strong><br> Via WhatsApp : <strong>${s.signalementsWA}</strong> (${s.pctWA}%)<br>⏱️ Délai moyen : <strong>${s.delaiMoyen} jours</strong><br>😊 Satisfaction : <strong>${s.satisfaction}%</strong><br>💡 Initiatives : <strong>${s.initTotal}</strong><br>❤️ Soutiens : <strong>${s.initSoutiens}</strong>`;
+  if (/quartier|quartiers|commune/.test(t)) return `🏘️ <strong>La Commune des Lacs 1</strong> compte <strong>${kb.quartiers.length} quartiers</strong>, dont :<br><br>${kb.quartiers.slice(0, 10).map(q => '• ' + q).join('<br>')}<br>... et ${kb.quartiers.length - 10} autres.<br><br>Chaque quartier est couvert par les services du BDC.`;
+  if (/rgpd|donnée|donnees|privé|prive|confidentiel|protection/.test(t)) return `🔒 <strong>Protection de vos données</strong><br><br>Vos données personnelles sont protégées conformément au RGPD :<br>• Usage exclusif pour le traitement<br>• Conservation limitée à <strong>24 mois</strong><br>• Aucune communication à des tiers<br>• Droit d'accès, de rectification et de suppression<br><br>📧 Contact DPO : ${kb.contact.email}`;
+  if (/merci|thanks|super|parfait|excellent|génial|genial/.test(t)) return `😊 Je vous en prie ! Le Bureau du Citoyen reste à votre écoute. Bonne journée ! 🌟`;
+  if (/au revoir|bye|à bientôt|a bientot|bonne journée|bonne journee/.test(t)) return `👋 Au revoir ! Le Bureau du Citoyen reste à votre disposition 24h/24. À bientôt !`;
+  return `Je n'ai pas bien compris votre question. <br><br><strong>Je peux vous renseigner sur :</strong><br>🏛️ <strong>Rôle du BDC</strong><br>📄 <strong>État Civil</strong> (naissance, mariage, décès, certificat, légalisation)<br>🏗️ <strong>Autorisations</strong> (bâtir, résidence, hébergement, occupation, manifestation)<br>📣 <strong>Signalements</strong> (Option A : ecrit · Option B : vocal pour analphabètes)<br>💡 <strong>Initiatives locales</strong><br>🗳️ <strong>Budget participatif</strong><br>📱 <strong>WhatsApp</strong><br>☎ <strong>Contacts</strong><br><br>Posez-moi votre question plus précisément !`;
+}
+
+let currentAdminTab = 0, currentEditIndex = null, currentDeleteType = null;
+function toggleAdmin() { document.getElementById('adminOverlay').classList.toggle('open'); renderAdmin(); }
+function switchAdminTab(idx) { currentAdminTab = idx; document.querySelectorAll('.admin-tab').forEach((t, i) => t.classList.toggle('active', i === idx)); renderAdmin(); }
+function renderAdmin() {
+  const body = document.getElementById('adminBody');
+  const s = computeStats();
+  if (currentAdminTab === 0) {
+    body.innerHTML = `<div class="admin-stats"><div class="admin-stat-card"><div class="num">${s.total}</div><div class="lbl">Total</div></div><div class="admin-stat-card"><div class="num">${s.recus}</div><div class="lbl">📥 Reçus</div></div><div class="admin-stat-card"><div class="num">${s.enCours}</div><div class="lbl">⚙️ En cours</div></div><div class="admin-stat-card"><div class="num">${s.resolus}</div><div class="lbl">✅ Résolus</div></div></div><button class="add-btn" onclick="openAddSignalement()">➕ Ajouter</button><table><thead><tr><th>N°</th><th>Date</th><th>Catégorie</th><th>Objet</th><th>Quartier</th><th>Source</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="signalementsTable"></tbody></table>`;
+    document.getElementById('signalementsTable').innerHTML = appData.signalements.map((sig, i) => { const bc = sig.statut.includes('Reçu') ? 'reçu' : sig.statut.includes('cours') ? 'encours' : 'résolu'; const src = sig.source === 'whatsapp' ? '📱' : sig.source === 'guichet' ? '🏢' : '🌐'; return `<tr><td><strong>${sig.id}</strong></td><td>${sig.date}</td><td>${sig.cat}</td><td>${sig.obj}</td><td>${sig.quartier}</td><td>${src}</td><td><span class="badge badge-${bc}">${sig.statut}</span></td><td><button class="action-btn btn-view" onclick="viewSig(${i})">👁️</button><button class="action-btn btn-edit" onclick="editSig(${i})">✏️</button><button class="action-btn btn-del" onclick="deleteItem('signalement',${i})">🗑️</button></td></tr>`; }).join('');
+  } else if (currentAdminTab === 1) {
+    body.innerHTML = `<div class="admin-stats"><div class="admin-stat-card"><div class="num">${s.initTotal}</div><div class="lbl">Total</div></div><div class="admin-stat-card"><div class="num">${s.initValidees}</div><div class="lbl">✅ Validées</div></div><div class="admin-stat-card"><div class="num">${s.initSoutiens}</div><div class="lbl">❤️ Soutiens</div></div></div><button class="add-btn" onclick="openAddInitiative()">➕ Ajouter</button><table><thead><tr><th>ID</th><th>Titre</th><th>Quartier</th><th>Auteur</th><th>Soutiens</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="initiativesTable"></tbody></table>`;
+    const badges = { 'proposee': '💭', 'en-etude': '🔍', 'validee': '✅', 'rejetee': '❌' };
+    document.getElementById('initiativesTable').innerHTML = appData.initiatives.map((init, i) => `<tr><td><strong>${init.id}</strong></td><td>${init.titre}</td><td>${init.quartier}</td><td>${init.auteur}</td><td><strong style="color:#28a745;">❤️ ${init.soutiens}</strong></td><td><span class="badge badge-${init.statut}">${badges[init.statut]} ${init.statut}</span></td><td><button class="action-btn btn-edit" onclick="editInit(${i})">✏️</button><button class="action-btn btn-del" onclick="deleteItem('initiative',${i})">🗑️</button></td></tr>`).join('');
+  } else if (currentAdminTab === 2) {
+    body.innerHTML = `<div class="admin-stats"><div class="admin-stat-card"><div class="num">${projets.length}</div><div class="lbl">Projets</div></div><div class="admin-stat-card"><div class="num">${s.totalVotes}</div><div class="lbl">Votes</div></div></div><table><thead><tr><th>ID</th><th>Titre</th><th>Catégorie</th><th>Coût</th><th>Votes</th><th>Actions</th></tr></thead><tbody>${projets.sort((a,b) => b.votes - a.votes).map((p, i) => `<tr><td><strong>${p.id}</strong></td><td>${p.icone} ${p.titre}</td><td>${p.categorie}</td><td>${(p.cout/1000000).toFixed(1)} M</td><td>${p.votes}</td><td><button class="action-btn btn-edit">✏️</button></td></tr>`).join('')}</tbody></table>`;
+  } else if (currentAdminTab === 3) {
+    body.innerHTML = `<div class="admin-stats"><div class="admin-stat-card"><div class="num">${appData.infos.length}</div><div class="lbl">Publications</div></div></div><button class="add-btn" onclick="openAddInfo()">➕ Ajouter</button><table><thead><tr><th>ID</th><th>Titre</th><th>Catégorie</th><th>Date</th><th>Actions</th></tr></thead><tbody id="infosTable"></tbody></table>`;
+    document.getElementById('infosTable').innerHTML = appData.infos.map((info, i) => `<tr><td><strong>${info.id}</strong></td><td>${info.titre}</td><td>${info.cat}</td><td>${info.date}</td><td><button class="action-btn btn-del" onclick="deleteItem('info',${i})">🗑️</button></td></tr>`).join('');
+  }
+}
+
+function viewSig(i) { const sig = appData.signalements[i]; const src = sig.source === 'whatsapp' ? '📱 WhatsApp' : sig.source === 'guichet' ? '🏢 Guichet BDC' : '🌐 Web'; document.getElementById('viewContent').innerHTML = `<p><strong>N° :</strong> ${sig.id}</p><p><strong>Date :</strong> ${sig.date}</p><p><strong>Source :</strong> ${src}</p><p><strong>Catégorie :</strong> ${sig.cat}</p><p><strong>Objet :</strong> ${sig.obj}</p><p><strong>Quartier :</strong> ${sig.quartier}</p><p><strong>Statut :</strong> ${sig.statut}</p><p><strong>Priorité :</strong> ${sig.prio}</p><p><strong>Délai :</strong> ${sig.delai} j</p><p style="margin-top:12px; padding:10px; background:#e0f2f1; border-radius:6px; font-size:12px; color:#0f766e;">💡 Le BDC transmet ce signalement au service technique compétent de la Mairie.</p>`; openModal('modalView'); }
+function editSig(i) { currentEditIndex = i; document.getElementById('editStatus').value = appData.signalements[i].statut; document.getElementById('editPriority').value = appData.signalements[i].prio; openModal('modalEdit'); }
+function saveEdit() { if (currentEditIndex !== null) { const old = appData.signalements[currentEditIndex].statut; const nw = document.getElementById('editStatus').value; appData.signalements[currentEditIndex].statut = nw; appData.signalements[currentEditIndex].prio = document.getElementById('editPriority').value; if (nw.includes('Résolu') && !old.includes('Résolu')) { const [j, m, a] = appData.signalements[currentEditIndex].date.split('/').map(Number); appData.signalements[currentEditIndex].delai = Math.max(1, Math.round((new Date(2026, 7, 19) - new Date(a, m-1, j)) / 86400000)); } closeModal('modalEdit'); renderAll(); } }
+function editInit(i) { currentEditIndex = i; document.getElementById('editInitStatus').value = appData.initiatives[i].statut; document.getElementById('editInitAvis').value = appData.initiatives[i].avis || ''; openModal('modalEditInit'); }
+function saveEditInit() { if (currentEditIndex !== null) { appData.initiatives[currentEditIndex].statut = document.getElementById('editInitStatus').value; appData.initiatives[currentEditIndex].avis = document.getElementById('editInitAvis').value; closeModal('modalEditInit'); renderAll(); } }
+function deleteItem(type, idx) { currentEditIndex = idx; currentDeleteType = type; openModal('modalDelete'); }
+function confirmDelete() { if (currentDeleteType === 'signalement') appData.signalements.splice(currentEditIndex, 1); else if (currentDeleteType === 'initiative') appData.initiatives.splice(currentEditIndex, 1); else if (currentDeleteType === 'info') appData.infos.splice(currentEditIndex, 1); closeModal('modalDelete'); renderAll(); }
+function openAddSignalement() { const n = 'OC-2026-' + String(190 + appData.signalements.length).padStart(4, '0'); appData.signalements.push({ id: n, date: '19/08/2026', cat: '🛣️ Voirie', obj: 'Nouveau signalement', quartier: 'Kpota 1', statut: '📥 Reçu', prio: '🟡 Moyenne', delai: 0, source: 'web' }); renderAll(); }
+function openAddInitiative() { const t = prompt('Titre :'); if (!t) return; const n = 'IL-2026-' + String(appData.initiatives.length + 1).padStart(4, '0'); appData.initiatives.push({ id: n, titre: t, cat: '💡 Innovation', quartier: 'Kpota 1', desc: 'Nouvelle initiative.', cout: 1000000, duree: '3 mois', auteur: 'Admin BDC', date: '19/08/2026', statut: 'proposee', soutiens: 0, avis: '' }); renderAll(); }
+function openAddInfo() { const t = prompt('Titre :'); if (!t) return; const n = 'INFO-' + String(appData.infos.length + 1).padStart(3, '0'); appData.infos.push({ id: n, titre: t, cat: 'actualites', date: '19/08/2026', contenu: 'Nouvelle information.' }); renderAll(); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function renderAll() {
+  const s = computeStats();
+  document.getElementById('statMois').textContent = s.ceMois;
+  document.getElementById('statResolus').textContent = s.resolus.toLocaleString('fr-FR');
+  document.getElementById('statDelai').textContent = s.delaiMoyen + ' j';
+  document.getElementById('statSatisfaction').textContent = s.satisfaction + '%';
+  renderInfos();
+  if (document.getElementById('adminOverlay').classList.contains('open')) renderAdmin();
+}
+
+function renderInfos() {
+  const labels = { actualites: '📰 Actualités', communiques: ' Communiqué', evenements: '📅 Événement', decisions: '⚖️ Décision', annonces: '📢 Annonce' };
+  document.getElementById('infoList').innerHTML = appData.infos.map(i => `<div class="info-item" data-cat="${i.cat}"><h4>${i.titre}</h4><div class="meta">${labels[i.cat] || i.cat} · ${i.date}</div><p>${i.contenu}</p></div>`).join('');
+}
+
+document.getElementById('signalementForm').addEventListener('submit', function(e) { e.preventDefault(); const n = 'OC-2026-' + String(190 + appData.signalements.length).padStart(4, '0'); appData.signalements.push({ id: n, date: '19/08/2026', cat: document.getElementById('formCat').value, obj: document.getElementById('formObjet').value, quartier: document.getElementById('formQuartier').value, statut: '📥 Reçu', prio: '🟡 Moyenne', delai: 0, source: 'web' }); document.getElementById('successDossier').textContent = n; openModal('modalSuccess'); this.reset(); renderAll(); });
+
+document.getElementById('vocalForm').addEventListener('submit', function(e) { 
+  e.preventDefault(); 
+  const n = 'OC-2026-' + String(190 + appData.signalements.length).padStart(4, '0'); 
+  appData.signalements.push({ 
+    id: n, 
+    date: '19/08/2026', 
+    cat: '🎙️ Vocal', 
+    obj: 'Message vocal', 
+    quartier: 'A preciser (audio)', 
+    statut: '📥 Reçu (vocal)', 
+    prio: '🟡 Moyenne', 
+    delai: 0, 
+    source: 'vocal' 
+  }); 
+  document.getElementById('successDossier').textContent = n; 
+  openModal('modalSuccess'); 
+  deleteRecording();
+  this.reset(); 
+  renderAll(); 
+});
+document.getElementById('initiativeForm').addEventListener('submit', function(e) { e.preventDefault(); const n = 'IL-2026-' + String(appData.initiatives.length + 1).padStart(4, '0'); appData.initiatives.push({ id: n, titre: document.getElementById('initTitre').value, cat: document.getElementById('initCat').value, quartier: document.getElementById('initQuartier').value, desc: document.getElementById('initDesc').value, cout: parseInt(document.getElementById('initCout').value) || 0, duree: document.getElementById('initDuree').value || 'Non précisé', auteur: document.getElementById('initAuteur').value, date: '19/08/2026', statut: 'proposee', soutiens: 0, avis: '' }); document.getElementById('successInitId').textContent = n; openModal('modalSuccessInit'); this.reset(); renderAll(); });
+
+document.querySelectorAll('#info-mairie .tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('#info-mairie .tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); const f = tab.dataset.filter; document.querySelectorAll('#infoList .info-item').forEach(i => { i.style.display = (f === 'all' || i.dataset.cat === f) ? 'block' : 'none'; }); }); });
+document.querySelectorAll('#suivi .tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('#suivi .tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); }); });
+document.querySelector('a[href="#admin"]').addEventListener('click', function(e) { e.preventDefault(); toggleAdmin(); });
+
+
+// ===== GESTION OPTION A / OPTION B =====
+function selectOption(opt) {
+  document.getElementById('optionChooser').style.display = 'none';
+  document.getElementById('panelA').classList.remove('active');
+  document.getElementById('panelB').classList.remove('active');
+  if (opt === 'A') {
+    document.getElementById('panelA').classList.add('active');
+    document.getElementById('optA').classList.add('selected');
+    document.getElementById('optB').classList.remove('selected');
+  } else {
+    document.getElementById('panelB').classList.add('active');
+    document.getElementById('optB').classList.add('selected');
+    document.getElementById('optA').classList.remove('selected');
+  }
+}
+
+function backToOptions() {
+  document.getElementById('optionChooser').style.display = 'grid';
+  document.getElementById('panelA').classList.remove('active');
+  document.getElementById('panelB').classList.remove('active');
+  document.getElementById('optA').classList.remove('selected');
+  document.getElementById('optB').classList.remove('selected');
+}
+
+// ===== ENREGISTREMENT AUDIO =====
+let mediaRecorder = null;
+let audioChunks = [];
+let audioBlob = null;
+let audioUrl = null;
+let recStartTime = null;
+let recTimerInterval = null;
+let isRecording = false;
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      audioUrl = URL.createObjectURL(audioBlob);
+      document.getElementById('audioPlayback').src = audioUrl;
+      document.getElementById('audioPlayback').style.display = 'block';
+      document.getElementById('audioBlob').value = audioUrl;
+      document.getElementById('audioRecorder').classList.add('has-audio');
+      document.getElementById('recStatus').textContent = "✅ Enregistrement terminé — vous pouvez l'ecouter ou le supprimer";
+      clearInterval(recTimerInterval);
+      isRecording = false;
+      updateRecButtons();
+      document.getElementById('vocalSubmit').disabled = false;
+      stream.getTracks().forEach(t => t.stop());
+    };
+
+    mediaRecorder.start();
+    isRecording = true;
+    recStartTime = Date.now();
+
+    document.getElementById('audioRecorder').classList.add('recording');
+    document.getElementById('audioWave').classList.add('recording');
+    document.getElementById('recStatus').textContent = '🔴 Enregistrement en cours...';
+    document.getElementById('recStatus').classList.add('recording');
+
+    recTimerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - recStartTime) / 1000);
+      const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+      const secs = String(elapsed % 60).padStart(2, '0');
+      document.getElementById('recTimer').textContent = mins + ':' + secs;
+      if (elapsed >= 120) stopRecording();
+    }, 1000);
+
+    updateRecButtons();
+  } catch (err) {
+    alert("Impossible d'acceder au micro. Verifiez les permissions de votre navigateur.\n\nAlternative : appelez le BDC au +228 93 91 00 90 ou utilisez WhatsApp.");
+    console.error(err);
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    document.getElementById('audioRecorder').classList.remove('recording');
+    document.getElementById('audioWave').classList.remove('recording');
+    document.getElementById('recStatus').classList.remove('recording');
+  }
+}
+
+function playRecording() {
+  const audio = document.getElementById('audioPlayback');
+  if (audio.src) { audio.play(); }
+}
+
+function deleteRecording() {
+  audioBlob = null;
+  audioUrl = null;
+  audioChunks = [];
+  document.getElementById('audioPlayback').src = '';
+  document.getElementById('audioPlayback').style.display = 'none';
+  document.getElementById('audioBlob').value = '';
+  document.getElementById('audioRecorder').classList.remove('has-audio');
+  document.getElementById('recTimer').textContent = '00:00';
+  document.getElementById('recStatus').textContent = "Touchez le micro rouge pour parler";
+  document.getElementById('vocalSubmit').disabled = true;
+  updateRecButtons();
+}
+
+function updateRecButtons() {
+  document.getElementById('btnRecord').disabled = isRecording || audioBlob !== null;
+  document.getElementById('btnStop').disabled = !isRecording;
+  document.getElementById('btnPlay').disabled = audioBlob === null;
+  document.getElementById('btnDel').disabled = audioBlob === null;
+}
+
+renderProjects();
+renderAll();
+</script>
+</body>
+</html>
